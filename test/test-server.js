@@ -7,8 +7,8 @@ const app = require('../server.js');
 
 chai.use(chaiHttp);
 
-describe('serving static', function () {
-    it('Should display index.html with a 200 status', function () {
+describe('serving static index', function () {
+    it('Should display Landing Page with a 200 status', function () {
         return chai
             .request(app)
             .get('/')
@@ -17,3 +17,26 @@ describe('serving static', function () {
         })
     })
 })
+/*
+describe('serving static hub', function () {
+    it('Should display Main Page with a 200 status', function () {
+        return chai
+            .request(app)
+            .get('./hub')
+            .then(function (res) {
+                res.should.have.status(200);
+            })
+    })
+})
+
+describe('serving static profile', function () {
+    it('Should display Profile Page with a 200 status', function () {
+        return chai
+            .request(app)
+            .get('./profile')
+            .then(function (res) {
+                res.should.have.status(200);
+            })
+    })
+})
+*/
