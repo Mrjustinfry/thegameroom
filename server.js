@@ -2,74 +2,23 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const app = express();
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
-
+app.use(morgan('common'));
+app.use(express.json());
 
 const { Posts, Users } = require('./models');
 const { DATABASE_URL, PORT } = require('./config');
 
+const userRouter = require('./userRouter');
+const postRouter = require('./postRouter');
 
-//GET request for hub
-app.get('/hub', (req, res) => {
-    Users.find()
-        .then(users => {
-            res.json(users.map(user => {
-                return {
-                    userName: user.userName,
-                    switch: user.switch,
-                    playstation: user.playstation,
-                    xbox: user.xbox,
-                    platform: user.platform
-                }
-            }))
-                .catch(err => {
-                    console.log(err);
-                    res.status({ message: "Internal Server Error" })
-                })
-        })
-});
+app.use('/users', userRouter);
+app.use('/posts', postRouter);
 
-//POST request for hub
-app.post('/signup', (req, res) => {
-    const requiredInfo = ['firstName', 'lastName', 'userName', 'passWord'];
-    requiredInfo.forEach(info => {
-        if (!(info in req.body)) {
-            const msg = `Missing ${info}`
-            console.log(msg);
-            res.send(msg)
-        }
-    });
-
-    Users.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userName: req.body.userName,
-        passWord: req.body.passWord,
-        switch: req.body.switch,
-        playstation: req.body.playstation,
-        xbox: req.body.xbox,
-        platform: req.body.platform
-    })
-
-        .then(user => {
-            res.status(201).json({
-                id: user._id,
-                userName: user.userName,
-                switch: user.switch,
-                playstation: user.playstation,
-                xbox: user.xbox,
-                platform: user.platform
-            })
-        })
-
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: 'something went wrong' });
-        });
-});
 
 
 
