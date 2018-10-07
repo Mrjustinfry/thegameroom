@@ -1,3 +1,147 @@
+// font-family: 'Bungee Shade', cursive;
+// font-family: 'Press Start 2P', cursive;
+
+
+
 * {
-    text-align: center;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgreen;
+}
+
+.container {
+    display: flex;
+    border: 1px solid red;
+}
+
+.containerLogo {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex: 2;
+    border: 1px solid blue;
+}
+
+.containerHead {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    border-radius: .5em;
+    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    background-color: white;
+}
+
+main {
+    position: relative;
+}
+
+.pBtn {
+    flex: 1;
+    order: 2;
+    border: 1px solid black;
+    border-radius: .5em;
+    background-color: deeppink;
+    margin: 2.2em;
+    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+}
+
+.hBtn {
+    flex: 1;
+    order: 1;
+    border: 1px solid black;
+    border-radius: .5em;
+    background-color: mediumpurple;
+    margin: 2.2em;
+    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+}
+
+.gBtn {
+    flex: 1;
+    order: 4;
+    border: 1px solid black;
+    border-radius: .5em;
+    background-color: dodgerblue;
+    color: white;
+    margin: 2.2em;
+    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+}
+
+.eBtn {
+    flex: 1;
+    order: 5;
+    border: 1px solid black;
+    border-radius: .5em;
+    background-color: black;
+    color: white;
+    margin: 2.2em;
+    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+}
+
+.mBtn {
+    flex: 3;
+    order: 3;
+    border: none;
+    border-radius: .5em;
+    background-color: white;
+    margin: 2.2em;
+}
+
+.titleBox {
+    flex: 1;
+}
+
+.logoBox {
+    flex: 1;
+}
+
+.nav {
+    flex: 1;
+    border: 1px solid orange;
+}
+
+li {
+    list-style: none;
+    display: inline;
+}
+
+.title {
+
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: auto;
+}
+
+.left, .right {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+}
+
+.logIn {
+    display: block;
+}
+
+#controller {
+    height: 100px;
+    width: 100px;
 }

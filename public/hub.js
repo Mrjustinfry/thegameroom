@@ -1,32 +1,113 @@
 ﻿'use strict'
 
-function signupTemplate() {
-    return `<div>
-            <form for="signup" id="signup">
-                <fieldset>
-                    <h4 class="signUpHead">Sign Up!</h4>
-                    <label>First Name: <input type="text" min="3" class="firstName" required /> </label>
-                    <label>Last Name: <input type="text" min="3" class="lastName" required /></label>
-                    <label>Choose a Username: <input type="text" min="3" maxlength="15" class="userName" required /></label>
-                    <div id="#"></div>
-                    <label>Password: <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required /></label>
-                    <label>Re-enter Password: <input type="password" min="5" maxlength="20" required /></label>
-                    <div id="#"></div>
-                    <label>Switch friend code: <input type="text" class="switch" placeholder="SW-1234-5678-9000" pattern="[SW][ -][0-9]{4}[ -][0-9]{4}[ -][0-9]{4}" /></label>
-                    <label>PS4 Gamertag: <input type="text" class="ps4" /></label>
-                    <label>Xbox Gamertag: <input type="text" class="xbox" /></label>
-                    <label>
-                        Preferred Platform:
-                        <select>
-                            <option value="Nintendo">Nintendo</option>
-                            <option value="Playstation">Playstation</option>
-                            <option value="Xbox">Xbox</option>
-                            <option value="PC">PC</option>
-                        </select>
-                    </label>
-                    <button>Submit</button>
-                </fieldset>
-            </form>
-        </div>`
+var USERS_URL = '/users';
+var POSTS_URL = '/posts';
+
+
+//Post users
+function addUser(user) {
+    console.log('Adding user: ' + user);
+    $.ajax({
+        method: 'POST',
+        url: USERS_URL,
+        data: JSON.stringify(user),
+        success: function (data) {
+            getAndDisplayUsers();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
+
+//update user
+function updateUser(user) {
+    console.log('Updating user `' + user.id + '`');
+    $.ajax({
+        url: USERS_URL + '/' + item.id,
+        method: 'PUT',
+        data: JSON.stringify(user),
+        success: function (data) {
+            getAndDisplayUsers()
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
+
+//delete user
+function deleteUser(userId) {
+    console.log('Deleting user `' + userId + '`');
+    $.ajax({
+        url: USERS_URL + '/' + userId,
+        method: 'DELETE',
+        success: getAndDisplayUsers()
+    });
+}
+
+//add post
+function addNewPost(post) {
+    console.log('Adding new post: ' + post);
+    $.ajax({
+        method: 'POST',
+        url: POSTS_URL,
+        data: JSON.stringify(post),
+        success: function (data) {
+            getAndDisplayPosts();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
+
+//delete post
+function deletePost(postId) {
+    console.log('Deleting post `' + postId + '`');
+    $.ajax({
+        url: POSTS_URL + '/' + postId,
+        method: 'DELETE',
+        success: getAndDisplayPosts()
+    });
+}
+
+//update post
+function updatePost(post) {
+    console.log('Updating post `' + post.id + '`');
+    $.ajax({
+        url: POSTS_URL + '/' + post.id,
+        method: 'PUT',
+        data: post,
+        success: function (data) {
+            getAndDisplayPosts();
+        }
+    });
+}
+
+
+function createUser() {
+    $('#signup').on('submit', function (e) {
+        e.preventDefault();
+        addUser({
+            firstName: $(e.currentTarget).find('.firstName').val(),
+            lastName: $(e.currentTarget).find('.lastName').val(),
+            userName: $(e.currentTarget).find('.userName').val(),
+            passWord: $(e.currentTarget).find('.passWord').val(),
+            nintendo: $(e.currentTarget).find('.switch').val(),
+            playstation: $(e.currentTarget).find('.playstation').val(),
+            xbox: $(e.currentTarget).find('.xbox').val()
+        })
+    })
 };
 
+function addUser(user) {
+    console.log('Adding user: ' + user);
+    $.ajax({
+        method: 'POST',
+        url: USERS_URL,
+        data: JSON.stringify(user),
+        success: function (data) {
+            getAndDisplayUsers();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
