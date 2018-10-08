@@ -71,37 +71,34 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 //PUT request for posts
-router.put('/:id', jsonParser, (req, res) => {
-    const requiredInfo = ["title", "content", "date"];
-    for (let i = 0; i < requiredInfo.length; i++) {
-        const info = requiredInfo[i];
-        if (!(info in req.body)) {
-            const msg = `missing ${info} in request`;
-            console.error(msg);
-            return res.status(400).send(msg);
-        }
-    }
-    if (req.params.id !== req.body.id) {
-        const msg = `ID's do not match`;
-        console.error(msg);
-        return res.status(400).send(msg);
-    }
-    console.log(`Updating post`);
-    const updatedPost =
-        Posts.update({
-            id: req.params.id,
-            title: req.body.title,
-            content: req.body.content,
-            date: req.body.date
+router.put('/:id', (req, res) => {
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        res.status(400).json({
+            error: `ID's do not match`
         });
-    res.status(204).end();
+    }
+
+    const updated = {};
+    const updateableInfo = ['title', 'content'];
+    updateableInfo.forEach(info => {
+        if (info in req.body) {
+            updated[info] = req.body[info];
+        }
+    });
+
+    Posts
+        .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+        .then(updatedPost => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
 
 //DELETE request for posts
 router.delete('/:id', (req, res) => {
-    Posts.findByIdAndRemove(req.params.id);
-    console.log(`Deleted post ${req.params.id}`);
-    res.status(204).end();
+    Posts.findOneAndDelete(req.params.id)
+        .then(() => {
+            console.log(`Deleted post ${req.params.id}`);
+            res.status(204).end();
+        });
 });
 
 

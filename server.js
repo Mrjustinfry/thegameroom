@@ -10,7 +10,6 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(express.json());
 
-const { Posts, Users } = require('./models');
 const { DATABASE_URL, PORT } = require('./config');
 
 const userRouter = require('./userRouter');
@@ -49,17 +48,15 @@ function runServer(databaseUrl, port = PORT) {
 function closeServer() {
     return mongoose.disconnect().then(() => {
         return new Promise((resolve, reject) => {
-            console.log('Closing Server');
+            console.log('Closing server');
             server.close(err => {
                 if (err) {
-                    {
-                        return reject(err);
-                    }
-                    resolve();
+                    return reject(err);
                 }
-            })
-        })
-    })
+                resolve();
+            });
+        });
+    });
 }
 
 
@@ -68,4 +65,4 @@ if (require.main === module) {
     runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
-module.exports = app;
+module.exports = { runServer, closeServer, app };

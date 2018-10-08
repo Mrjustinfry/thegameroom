@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -16,7 +16,10 @@ router.get('/', (req, res) => {
             res.json(users.map(user => {
                 return {
                     id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     userName: user.userName,
+                    passWord: user.passWord,
                     email: user.email,
                     nintendo: user.nintendo,
                     playstation: user.playstation,
@@ -26,9 +29,9 @@ router.get('/', (req, res) => {
             }))
                 .catch(err => {
                     console.log(err);
-                    res.status({ message: "Internal Server Error" })
-                })
-        })
+                    res.status(500).json({ error: "Internal Server Error" });
+                });
+        });
 });
 
 //GET request user by id
@@ -38,7 +41,10 @@ router.get('/:id', (req, res) => {
         .then(user => {
             res.json({
                 id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 userName: user.userName,
+                passWord: user.passWord,
                 email: user.email,
                 nintendo: user.nintendo,
                 playstation: user.playstation,
@@ -95,46 +101,34 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 //PUT request for users
-router.put('/:id', jsonParser, (req, res) => {
-    const requiredInfo = ["email", "nintendo","playstation", "xbox"];
-    for (let i = 0; i < requiredInfo.length; i++) {
-        const info = requiredInfo[i];
-        if (!(info in req.body)) {
-            const msg = `missing ${info} in request`;
-            console.error(msg);
-            return res.status(400).send(msg);
+router.put('/:id', (req, res) => {
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        res.status(400).json({
+            error: `ID's do not match`
+        });
+    }
+
+    const updated = {};
+    const updateableInfo = ['firstName', 'lastName', 'userName', 'passWord', 'email', 'nintendo', 'playstation', 'xbox', 'platform'];
+    updateableInfo.forEach(info => {
+        if (info in req.body) {
+            updated[info] = req.body[info];
         }
-    }
-    if (req.params.id !== req.body.id) {
-        const msg = `ID's do not match`;
-        console.error(msg);
-        return res.status(400).send(msg);
-    }
-    console.log(`Updating user info`);
-    Users.update({
-        id: req.params.id,
-        email: req.body.email,
-        nintendo: req.body.nintendo,
-        playstation: req.body.playstation,
-        xbox: req.body.xbox
     });
-    res.status(204).end();
-})
+
+    Users
+        .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+        .then(updatedUser => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
+});
 
 //DELETE request for users
 router.delete('/:id', (req, res) => {
-    Posts.remove({ user: req.params._id })
+    Users.findOneAndDelete(req.params.id)
         .then(() => {
-            User.findByIdAndRemove(req.params._id)
-                .then(() => {
-                    console.log(`Deleted posts for \`${req.params._id}\``)
-                    res.status(204).json({ message: 'Success' });
-                });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: 'Something went wrong' });
-        })
-})
+            console.log(`Deleted user ${req.params.id}`);
+            res.status(204).end();
+        });
+});
 
 module.exports = router;
