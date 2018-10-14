@@ -27,11 +27,11 @@ router.get('/', (req, res) => {
                     platform: user.platform
                 }
             }))
+        })
                 .catch(err => {
                     console.log(err);
                     res.status(500).json({ error: "Internal Server Error" });
                 });
-        });
 });
 
 //GET request user by id
