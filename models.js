@@ -5,14 +5,23 @@ const uuid = require('uuid');
 
 mongoose.Promise = global.Promise;
 
-const commentSchema = mongoose.Schema({ content: String });
+const commentSchema = mongoose.Schema({author: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, content: String });
 
 const postSchema = mongoose.Schema({
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, 
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
     comments: [commentSchema]
 })
+
+/*
+ * Post.findOne({_id: 123})
+.populate('postedBy')
+.exec(function(err, post) {
+    // do stuff with post
+});
+*/
 
 postSchema.methods.serialize = function () {
     return {
@@ -31,6 +40,7 @@ const userSchema = mongoose.Schema({
     userName: { type: String, unique: true },
     passWord: String,
     email: String,
+   // picture: String,
     nintendo: String,
     playstation: String,
     xbox: String,
@@ -45,6 +55,7 @@ userSchema.methods.serialize = function () {
         userName: this.userName,
         passWord: this.passWord,
         email: this.email,
+       // picture: this.picture,
         nintendo: this.nintendo,
         playstation: this.playstation,
         xbox: this.xbox,

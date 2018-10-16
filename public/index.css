@@ -1,4 +1,4 @@
-// font-family: 'Bungee Shade', cursive;
+// font-family: 'Roboto Mono', monospace;
 // font-family: 'Press Start 2P', cursive;
 
 
@@ -7,13 +7,26 @@
     box-sizing: border-box;
 }
 
+html {
+    background: url(tronbackground.jpg);
+    background-attachment: scroll;
+    background-position: center;
+}
+
+
 body {
-    background-color: lightgreen;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .container {
     display: flex;
     border: 1px solid red;
+    padding: 3%;
+    margin: 3%;
 }
 
 .containerLogo {
@@ -25,80 +38,91 @@ body {
 }
 
 .containerHead {
-    display: flex;
+    display: none;
     justify-content: space-between;
     height: auto;
     width: 100%;
-    position: relative;
+    position: fixed;
     top: 0;
     left: 0;
     margin: 0;
-    border-radius: .5em;
-    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    box-shadow: rgba(14, 8, 8, .5) 5px 7px 9px;
     background-color: white;
+    max-height: 2em;
+    z-index: 4;
 }
 
 main {
     position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    padding-top: 1.5em;
+}
+
+.postBox {
+    display: flex;
+    padding: 3%;
+    margin: 3%;
+    background-color: black;
+    font-family: 'Roboto Mono', monospace;
+    border: 1px solid white;
+    border-radius: 1em;
+    flex: 1;
+}
+
+.userPostBox {
+    display: flex;
+    flex-direction: column;
+    padding: 0.3em;
+    border-right: 2px solid hotpink;
+}
+
+.contentBox {
+    flex-grow: 2;
+    padding-left: 2em;
 }
 
 .pBtn {
     flex: 1;
     order: 2;
-    border: 1px solid black;
-    border-radius: .5em;
+    border: none;
     background-color: deeppink;
-    margin: 2.2em;
-    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.2em;
+    padding: 1em;
 }
+
 
 .hBtn {
     flex: 1;
     order: 1;
-    border: 1px solid black;
-    border-radius: .5em;
-    background-color: mediumpurple;
-    margin: 2.2em;
-    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    border: none;
+    background-color: lightgreen;
+    padding: .5em;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.2em;
+    padding: 1em;
 }
 
 .gBtn {
     flex: 1;
     order: 4;
-    border: 1px solid black;
-    border-radius: .5em;
-    background-color: dodgerblue;
-    color: white;
-    margin: 2.2em;
-    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    border: none;
+    background-color: aqua;
+    padding: 1em;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.2em;
 }
 
 .eBtn {
     flex: 1;
     order: 5;
-    border: 1px solid black;
-    border-radius: .5em;
-    background-color: black;
-    color: white;
-    margin: 2.2em;
-    box-shadow: rgba(14, 8, 8, 0.25) 5px 7px 5px;
+    border: none;
+    background-color: yellow;
+    padding: 1em;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.2em;
 }
 
-.mBtn {
-    flex: 3;
-    order: 3;
-    border: none;
-    border-radius: .5em;
-    background-color: white;
-    margin: 2.2em;
+
+#landing {
+    padding: 5%;
 }
 
 .titleBox {
@@ -120,28 +144,364 @@ li {
 }
 
 .title {
+    text-align: center;
+    border-bottom: 1px solid lightgreen;
+    color: hotpink;
+}
 
+.date {
+    font-size: xx-small;
+    float: right;
+    padding-top: 1.3em;
+}
+
+.uName {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    color: lightgreen;
+}
+
+.uPic {
+    text-align: center;
+    height: 10em;
+    width: 10em;
+}
+
+.content {
+    color: white;
+    text-indent: .5em;
 }
 
 .mainContainer {
     display: flex;
     justify-content: center;
     height: auto;
-    width: auto;
+    flex-direction: column;
+    width: 100%;
 }
 
-.left, .right {
+.mainTitle {
+    text-align: center;
+    margin: auto;
+    font-family: 'Press Start 2P', cursive;
+    padding: 1.2em;
+    letter-spacing: .2em;
+    border-radius: 3px;
+    color: palegreen;
+    text-shadow: 2px 5px hotpink;
+}
+
+.mainInfo {
+    text-indent: 10%;
+    font-family: 'Roboto Mono', monospace;
+    margin-top: 5%;
+}
+
+.mainInfoBox {
     display: flex;
-    justify-content: center;
-    flex: 1;
+    flex-flow: row wrap;
+}
+
+
+.gameRoomBox {
+    border: 1px solid lightgreen;
+    border-radius: 3px;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    background-image: url(gamecontroller2.png);
+    background-repeat: no-repeat;
+    background-position: top left;
 }
 
 .logIn {
     display: block;
+    padding: 1%;
+    background-color: black;
+    color: lightgreen;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 5%;
+    font-family: 'Press Start 2P', cursive;
+    font-size: .8em;
+    border: 1px solid hotpink;
+    border-radius: 10px;
+}
+
+.usrLogin {
+    font-family: 'Press Start 2P', cursive;
+    font-size: .6em;
+    background-color: hotpink;
+    border: none;
+    height: 2.3em;
+    border-bottom: 2px solid lightgreen;
+    color: white;
 }
 
 #controller {
     height: 100px;
     width: 100px;
+    margin: 0 auto;
+    text-align: center;
+    flex: 1;
+}
+
+.toggle {
+    display: none;
+}
+
+.logInBtn, #postBtn {
+    background-color: hotpink;
+    float: right;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    padding: 2%;
+    border: 1px solid hotpink;
+    border-radius: 5%;
+    box-shadow: -1px 2px 1px 1px lightgreen;
+    margin-right: 3%;
+}
+
+#suBtn {
+    float: left;
+}
+
+.modal {
+    position: fixed; 
+    z-index: 2; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+fieldset {
+    border: none;
+}
+
+.signupBox {
+    background-color: black;
+    color: lightgreen;
+    padding: 3%;
+    border: 5px solid aqua;
+    border-radius: 10px;
+    margin: 2em;
+}
+
+#signup {
+    border-radius: 10px;
+    background-image: url(retrocitybackground.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.sInput {
+    flex: 1;
+    color: lightgreen;
+    text-shadow: 2px 2px black;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.2em;
+}
+
+#center {
+    text-align: center;
+    font-weight: bold;
+}
+
+.suIn {
+    border: none;
+    background-color: rgba(10, 10, 10, .7);
+    color: whitesmoke;
+    font-family: 'Roboto Mono', monospace;
+    flex: 1;
+    border-bottom: 1px solid lightgreen;
+}
+
+.signUpHead {
+    text-align: center;
+    margin: auto;
+    font-family: 'Press Start 2P', cursive;
+    padding: 1.2em;
+    letter-spacing: .2em;
+    border-radius: 3px;
+    color: hotpink;
+    text-shadow: 2px 3px lightgreen;
+}
+
+label {
+    display: flex;
+    padding: .5em;
+}
+
+.w {
+    flex: 3;
+}
+
+input {
+    background-color: white;
+    color: black;
+    
+    flex: 1;
+    flex-basis: 50%;
+    justify-content: flex-end;
+    margin: auto;
+}
+
+.modalContent {
+    margin: 15% auto;
+    flex: 1;
+}
+
+
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: lightgreen;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+
+.hubContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    padding: 1%;
+}
+
+.theHub {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    border: 5px solid hotpink;
+}
+
+.section {
+    flex: 1;
+    flex-basis: 50%;
+    padding: 5%;
+}
+
+.btns {
+    height: 100%;
+    width: 100%;
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    margin: auto 0;
+    text-shadow: 0px 3px 4px black;
+}
+
+.profileBtn {
+    background-image: linear-gradient(to top, hotpink, black);
+}
+
+.gameBtn {
+    background-image: linear-gradient(to top, lightgreen, black);
+}
+
+.postBtn {
+    background-image: linear-gradient(to bottom, aqua, black);
+}
+
+.allBtn {
+    background-image: linear-gradient(to bottom, yellow, black);
+}
+
+.userBox {
+    display: flex;
+    border: 1px solid white;
+    padding: 3%;
+    margin: 3%;
+    background-color: white;
+    color: black;
+    font-family: 'Roboto Mono', monospace;
+    flex-grow: 1;
+    border-radius: 5px;
+    background-image: url(gamecontroller.png);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+}
+
+.namePic {
+    flex: 1;
+    padding-right: 10%;
+}
+
+.userInfo {
+    flex-grow: 1;
+}
+
+.userName {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 70%;
+}
+
+.proHead {
+    display: flex;
+    justify-content: space-around;
+}
+
+.newPostBox {
+    border: 5px solid aqua;
+    border-radius: 10px;
+    height: 18em;
+    margin: 2em;
+    background-color: black;
+}
+
+.newPostForm {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    background-image: url(retrocitybackground.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.newPostTitle {
+    border: none;
+    background-color: rgba(140, 247, 17, 0.33);
+    color: whitesmoke;
+    font-family: 'Roboto Mono', monospace;
+    flex: 2;
+    border-bottom: 1px solid lightgreen;
+}
+
+.newPostContent {
+    height: 10em;
+    border-right: 1px solid lightgreen;
+    flex: 2;
+    background-color: rgba(140, 247, 17, 0.33);
+}
+
+.pInput {
+    color: hotpink;
+}
+
+.tInput {
+    color: hotpink;
+}
+
+@media only screen and (min-width: 687px) {
+
 }

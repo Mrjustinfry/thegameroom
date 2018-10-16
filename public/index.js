@@ -23,6 +23,7 @@ const modal = {
     }
 }*/
 
+
 class Modal {
     initialize() {
         $('.modal').prop('hidden', false);
@@ -36,7 +37,7 @@ class Modal {
 const modal = new Modal()
 
 function signUp() {
-    $('#suBtn').on('click', function (e) {
+    $('#suBtn').on('click', function(e) {
         e.preventDefault();
         $('.modalContent').html(signupTemplate);
         modal.initialize();
@@ -73,6 +74,7 @@ function createNewPost() {
         addNewPost();
         $('.modal').toggle();
     })
+
 };
 
 function displayAllPosts() {
@@ -98,33 +100,31 @@ function getAndDisplayPosts() {
 }
 
 function handleProfile() {
-    $('.hubContainer').hide();
-    $('.containerHead').css('display', 'flex');
-    $('.mainContainer').css('flex-flow', 'column wrap');
-    $('.mainContainer').html(profileTemplate);
-    $.getJSON(USERS_URL, function (users) {
-        proUsernamesTemplate(users);
-    })
-    $.getJSON(POSTS_URL, function (posts) {
-        proPosts(posts);
-    })
+        $('.hubContainer').hide();
+        $('.containerHead').css('display', 'flex');
+        $('.mainContainer').css('flex-flow', 'column wrap');
+        $('.mainContainer').html(profileTemplate);
+        $.getJSON(USERS_URL, function (users) {
+            proUsernamesTemplate(users);
+        })
+        $.getJSON(POSTS_URL, function (posts) {
+            proPosts(posts);
+        })
 }
 
 function handleDeletePost() {
-    $(document.body).on('click', '.deletePost', function (e) {
-        e.preventDefault();
-        alert('Are you sure you want to delete this post?');
-        if (confirm('This post has been deleted')) {
-            deletePost(
-                $('.postBox').data('id'));
-            getAndDisplayPosts();
-        } else {
-            getAndDisplayPosts();
-        }
-    });
+        $(document.body).on('click', '.deletePost', function (e) {
+            e.preventDefault();
+            alert('Are you sure you want to delete this post?');
+            if (confirm('This post has been deleted')) {
+                deletePost(
+                    $('.postBox').data('id'));
+                getAndDisplayPosts();
+            } else {
+                getAndDisplayPosts();
+            }
+        });
 }
-
-
 
 $(function () {
     signUp();

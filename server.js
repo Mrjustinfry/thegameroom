@@ -52,7 +52,7 @@ app.use('*', (req, res) => {
 
 let server;
 
-function runServer() {
+function runServer(databaseUrl = DATABASE_URL, port = PORT) {
     return new Promise((resolve, reject) => {
         mongoose.connect(DATABASE_URL, { useMongoClient: true }, err => {
             if (err) {
