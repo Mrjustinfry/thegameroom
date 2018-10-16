@@ -142,12 +142,12 @@ function displayUsers(data) {
 function displayPosts(data) {
     for (let i = 0; i < data.length; i++) {
         $('.mainContainer').prepend(`<div class="container postBox" data-id="${data[i].id}">` +
-            `<div class="userPostBox"><p class="uName">UserName</p><img src="profile.jpg" alt="profile image" class="uPic" /></div>` +
-            '<div class="contentBox"><h3 class="title">' + data[i].title + '</h3>' +
-            '<p class="content">' + data[i].content + '</p>' +
+                `<div class="userPostBox"><p class="uName">UserName</p><img src="profile.jpg" alt="profile image" class="uPic" /></div>` +
+                '<div class="contentBox"><h3 class="title">' + data[i].title + '</h3>' +
+                '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
             `<button class="deletePost">Delete</button>` +
-            '</div>');//add comments
+                '</div>');//add comments
     }
 };
 
@@ -192,6 +192,7 @@ function landingTemplate() {
             <form class="logIn" for="logIn">
                 <fieldset>
                     <h2>Log in:</h2>
+
                     <label>Username: <input type="text" class="usrLogin userName" /></label>
                     <label>Password: <input type="password" class="usrLogin passWord" /></label>
                     <button class="logInBtn" type="submit">Login</button>
@@ -244,6 +245,7 @@ function headerTemplate() {
         </header>
     </div>`
 };
+
 
 function homeTemplate() {
     return `<div class="hubContainer">

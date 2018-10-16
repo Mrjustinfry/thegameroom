@@ -24,8 +24,6 @@ postSchema.methods.serialize = function () {
 };
 
 
-
-
 const Posts = mongoose.model('posts', postSchema)
 
 module.exports = { Posts };
