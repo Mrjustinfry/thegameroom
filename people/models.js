@@ -17,8 +17,8 @@ const peopleSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    firstName: String,
-    lastName: String,
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
     email: String,
     nintendo: String,
     playstation: String,
@@ -29,9 +29,9 @@ const peopleSchema = mongoose.Schema({
 peopleSchema.methods.serialize = function () {
     return {
         id: this._id,
-        userName: this.username,
-        firstName: this.firstName,
-        lastName: this.lastName,
+        userName: this.userName || '',
+        firstName: this.firstName || '',
+        lastName: this.lastName || '',
         email: this.email,
         nintendo: this.nintendo,
         playstation: this.playstation,

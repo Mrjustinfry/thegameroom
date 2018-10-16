@@ -20,9 +20,14 @@ const postRouter = require('./postRouter');
 const { router: peopleRouter } = require('./people');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
-app.use('/posts', postRouter);
-app.use('/api/users/', peopleRouter);
-app.use('/api/auth/', authRouter);
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+app.use(passport.initialize());
+
+
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -34,11 +39,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-passport.use(localStrategy);
-passport.use(jwtStrategy);
-
-
-const jwtAuth = passport.authenticate('jwt', { session: false });
+app.use(jwtAuth);
+app.use('/api/auth/', authRouter);
+app.use('/posts', postRouter);
+app.use('/api/users/', peopleRouter);
 
 app.get('/api/protected', jwtAuth, (req, res) => {
     return res.json({
@@ -52,7 +56,7 @@ app.use('*', (req, res) => {
 
 let server;
 
-function runServer(databaseUrl = DATABASE_URL, port = PORT) {
+function runServer(DATABASE_URL, port = PORT) {
     return new Promise((resolve, reject) => {
         mongoose.connect(DATABASE_URL, { useMongoClient: true }, err => {
             if (err) {
@@ -86,7 +90,7 @@ function closeServer() {
 }
 
 if (require.main === module) {
-    runServer().catch(err => console.error(err));
+    runServer(process.env.DATABASE_URL).catch(err => console.error(err));
 }
 
 module.exports = { app, runServer, closeServer };

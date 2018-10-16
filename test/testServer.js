@@ -1,6 +1,6 @@
 
 'use strict';
-
+global.DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
@@ -9,9 +9,10 @@ const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
-const { Posts, Users } = require('../models');
+const { Posts } = require('../models');
+const { People } = require('../people/models');
 const { closeServer, runServer, app } = require('../server');
-const { TEST_DATABASE_URL } = require('../config');
+const { DATABASE_URL } = require('../config');
 
 function tearDownDb() {
     return new Promise((resolve, reject) => {
@@ -50,12 +51,12 @@ function seedUserData() {
             platform: faker.random.word
         });
     }
-    return Users.insertMany(seedUserData);
+    return People.insertMany(seedUserData);
 }
 
 describe('The game room api (posts)', function () {
     before(function () {
-        return runServer(TEST_DATABASE_URL);
+        return runServer(DATABASE_URL);
     });
 
     beforeEach(function () {
@@ -152,26 +153,28 @@ describe('The game room api (posts)', function () {
     })
 
     describe('Put requests for posts', function () {
-        const updatedPost = {
-            title: "Hello",
-            content: "How are you doing?"
-        }
-        return Posts.findOne()
-            .then(post => {
-                updatedPost.id = post.id;
-                return chai.request(app)
-                    .put(`/posts/${updatedPost.id}`)
-                    .send(updatedPost)
-            })
-            .then(function (res) {
-                res.should.have.status(204);
-                return Posts.findById(updatedPost.id);
-            })
-            .then(res => {
-                res.title.should.equal(updatedPost.title);
-                res.content.should.equal(updatedPost.content);
-            })
-    })
+        it('Should update post', function () {
+            const updatedPost = {
+                title: "Hello",
+                content: "How are you doing?"
+            }
+            return Posts.findOne()
+                .then(post => {
+                    updatedPost.id = post.id;
+                    return chai.request(app)
+                        .put(`/posts/${updatedPost.id}`)
+                        .send(updatedPost)
+                })
+                .then(function (res) {
+                    res.should.have.status(204);
+                    return Posts.findById(updatedPost.id);
+                })
+                .then(res => {
+                    res.title.should.equal(updatedPost.title);
+                    res.content.should.equal(updatedPost.content);
+                })
+        })
+    });
 
     describe('Delete requests for posts', function () {
         it('Should delete posts by id', function () {
@@ -199,7 +202,7 @@ describe('The game room api (posts)', function () {
 describe('The game room api (users)', function () {
 
     before(function () {
-        return runServer(TEST_DATABASE_URL);
+        return runServer(DATABASE_URL);
     });
 
     beforeEach(function () {
@@ -224,7 +227,7 @@ describe('The game room api (users)', function () {
                     res = _res;
                     res.should.have.status(200);
                     res.body.should.have.lengthOf.at.least(1);
-                    return Users.count();
+                    return People.count();
                 })
                 .then(count => {
                     res.body.should.have.lengthOf(count);
@@ -257,7 +260,7 @@ describe('The game room api (users)', function () {
                         );
                     });
                     resUser = res.body[0];
-                    return Users.findById(resUser.id)
+                    return People.findById(resUser.id)
                 })
                 .then(user => {
                     resUser.firstName.should.equal(user.firstName);
@@ -316,7 +319,7 @@ describe('The game room api (users)', function () {
                     res.body.playstation.should.equal(newUser.playstation);
                     res.body.xbox.should.equal(newUser.xbox);
                     res.body.platform.should.equal(newUser.platform);
-                    return Users.findById(res.body.id);
+                    return People.findById(res.body.id);
                 })
                 .then(user => {
                     user.firstName.should.equal(newUser.firstName);
@@ -346,7 +349,7 @@ describe('The game room api (users)', function () {
             platform: "playstation"
         };
 
-        return Users
+        return People
             .findOne()
             .then(user => {
                 updatedUser.id = user.id;
@@ -357,7 +360,7 @@ describe('The game room api (users)', function () {
             })
             .then(res => {
                 res.should.have.status(204);
-                return Users.findById(updatedUser.id);
+                return People.findById(updatedUser.id);
             })
             .then(user => {
                 user.firstName.should.equal(updatedUser.firstName);
@@ -377,7 +380,7 @@ describe('The game room api (users)', function () {
         it('Should delete user data by id', function () {
             let user;
 
-            return Users
+            return People
                 .findOne()
                 .then(_user => {
                     user = _user;
@@ -385,7 +388,7 @@ describe('The game room api (users)', function () {
                 })
                 .then(res => {
                     res.should.have.status(204);
-                    return Users.findById(user.id);
+                    return People.findById(user.id);
                 })
                 .then(_user => {
                     should.not.exist(_user);

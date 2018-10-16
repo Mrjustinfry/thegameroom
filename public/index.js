@@ -45,7 +45,7 @@ function signUp() {
 }
 
 function newPostRender() {
-    $(document.body).on('click', '.postBtn', function (e) {
+    $('.maodal').on('click', '.postBtn', function (e) {
         e.preventDefault();
         $('.modalContent').html(newPostTemplate);
         modal.initialize();
@@ -113,7 +113,7 @@ function handleProfile() {
 }
 
 function handleDeletePost() {
-        $(document.body).on('click', '.deletePost', function (e) {
+        $('.mainContainer').on('click', '.deletePost', function (e) {
             e.preventDefault();
             alert('Are you sure you want to delete this post?');
             if (confirm('This post has been deleted')) {
@@ -131,35 +131,35 @@ $(function () {
     newPostRender();
    // handleLogin();
     createNewPost();
-    $(document.body).on('click', '.gameBtn', function (e) {
+    $('.mainContainer').on('click', '.gameBtn', function (e) {
         e.preventDefault();
         $('.hubContainer').hide();
         $('.containerHead').css('display', 'flex');
         $('.mainContainer').css('flex-flow', 'row wrap');
         getAndDisplayUsers();
     })
-    $(document.body).on('click', '.profileBtn', function (e) {
+    $('.mainContainer').on('click', '.profileBtn', function (e) {
         e.preventDefault();
         handleProfile();
     })
-    $(document.body).on('click', '.hBtn', function (e) {
+    $('.containerHead').on('click', '.hBtn', function (e) {
         e.preventDefault();
         handleProfile();
     })
-    $(document.body).on('click', '.allBtn', function (e) {
+    $('.mainContainer').on('click', '.allBtn', function (e) {
         e.preventDefault();
         $('.hubContainer').hide();
         $('.containerHead').css('display', 'flex');
         $('.mainContainer').css('flex-flow', 'column');
         getAndDisplayPosts();
     })
-    $(document.body).on('click', '.gBtn', function (e) {
+    $('.containerHead').on('click', '.gBtn', function (e) {
         e.preventDefault();
         $('.mainContainer').html('');
         $('.mainContainer').css('flex-flow', 'row wrap');
         getAndDisplayUsers();
     })
-    $(document.body).on('click', '.pBtn', function (e) {
+    $('.containerHead').on('click', '.pBtn', function (e) {
         e.preventDefault();
         $('.mainContainer').html('');
         $('.mainContainer').css('flex-flow', 'column');

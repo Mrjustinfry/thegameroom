@@ -147,7 +147,7 @@ function updatePost(post) {
 
 
 function handleNewUser() {
-    $(document.body).on('click', '#signupuser', function (e) {
+    $('.modal').on('click', '#signupuser', function (e) {
         e.preventDefault();
         addUser({
             firstName: $('#signup').find('.firstName').val(),
@@ -174,7 +174,7 @@ function handleLoginInfo() {
 }
 
 function handleNewPost() {
-    $(document.body).on('click', '#postBtn', function (e) {
+    $('.moda').on('click', '#postBtn', function (e) {
         e.preventDefault();
         addNewPost({
             title: $('.newPostForm').find('.newPostTitle').val(),

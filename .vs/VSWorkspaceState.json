@@ -1,18 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-<<<<<<< HEAD
-    "\\auth",
-    "\\people",
     "\\public",
     "\\test"
   ],
-  "SelectedNode": "\\test\\testauth.js",
-=======
-    "\\public",
-    "\\test"
-  ],
-  "SelectedNode": "\\public\\index.js",
->>>>>>> bcc9e8eee6bb10a0cd717b7e2614c0ca05135326
+  "SelectedNode": "\\config.js",
   "PreviewInSolutionExplorer": false
 }

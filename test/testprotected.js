@@ -11,9 +11,7 @@ const { JWT_SECRET } = require('../config');
 
 const expect = chai.expect;
 
-// This let's us make HTTP requests
-// in our tests.
-// see: https://github.com/chaijs/chai-http
+
 chai.use(chaiHttp);
 
 describe('Protected endpoint', function () {
@@ -101,12 +99,12 @@ describe('Protected endpoint', function () {
                         firstName,
                         lastName
                     },
-                    exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
+                    exp: Math.floor(Date.now() / 1000) - 10
                 },
                 JWT_SECRET,
                 {
                     algorithm: 'HS256',
-                    subject: username
+                    subject: userName
                 }
             );
 
@@ -138,7 +136,7 @@ describe('Protected endpoint', function () {
                 JWT_SECRET,
                 {
                     algorithm: 'HS256',
-                    subject: username,
+                    subject: userName,
                     expiresIn: '7d'
                 }
             );
