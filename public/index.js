@@ -21,8 +21,8 @@ const modal = {
             $('.modal').prop('hidden', true);
         })
     }
-
 }*/
+
 
 class Modal {
     initialize() {
@@ -48,8 +48,7 @@ function newPostRender() {
     $(document.body).on('click', '.postBtn', function (e) {
         e.preventDefault();
         $('.modalContent').html(newPostTemplate);
-        modalOpen();
-        modalClose();
+        modal.initialize();
     })
 }
 
@@ -75,6 +74,7 @@ function createNewPost() {
         addNewPost();
         $('.modal').toggle();
     })
+
 };
 
 function displayAllPosts() {
@@ -126,12 +126,10 @@ function handleDeletePost() {
         });
 }
 
-
-
 $(function () {
     signUp();
-    newPostRender(); 
-    handleLogin();
+    newPostRender();
+   // handleLogin();
     createNewPost();
     $(document.body).on('click', '.gameBtn', function (e) {
         e.preventDefault();

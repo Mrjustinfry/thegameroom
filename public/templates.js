@@ -53,7 +53,6 @@ var MOCK_POST_DATA = {
         }
     ]
 };
-
 var MOCK_USER_DATA = {
     "mockUsers": [
         {
@@ -193,8 +192,9 @@ function landingTemplate() {
             <form class="logIn" for="logIn">
                 <fieldset>
                     <h2>Log in:</h2>
-                    <label>Username: <input type="text" class="usrLogin" /></label>
-                    <label>Password: <input type="password" class="usrLogin" /></label>
+
+                    <label>Username: <input type="text" class="usrLogin userName" /></label>
+                    <label>Password: <input type="password" class="usrLogin passWord" /></label>
                     <button class="logInBtn" type="submit">Login</button>
                     <p>Not a member? </p><button id="suBtn" class="logInBtn">Sign up now!</button>
                 </fieldset>
@@ -212,8 +212,8 @@ function signupTemplate() {
                     <label><div class="sInput">First Name: </div><input type="text" min="3" class="firstName suIn" required /></label>
                     <label><div class="sInput">Last Name: </div><input type="text" min="3" class="lastName suIn" required /></label>
                     <label><div class="sInput">Email: </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
-                    <label><div class="sInput">Choose a Username: </div><input type="text" min="3" maxlength="15" class="suIn" required /></label>
-                    <label><div class="sInput">Password: </div><input type="password" class="passWord suIn" required /></label>
+                    <label><div class="sInput">Choose a Username: </div><input type="text" min="3" maxlength="15" class="userName suIn" required /></label>
+                    <label><div class="sInput">Password: </div><input type="password" class="passWord suIn" min="10" required /></label>
                     <label><div class="sInput">Re-enter Password: </div><input type="password" min="5" maxlength="20" class="passwordtwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
@@ -245,6 +245,7 @@ function headerTemplate() {
         </header>
     </div>`
 };
+
 
 function homeTemplate() {
     return `<div class="hubContainer">
