@@ -1,3 +1,4 @@
+
 'use strict';
 
 const chai = require('chai');
@@ -91,7 +92,7 @@ describe('The game room api (posts)', function () {
                     res = _res;
                     res.should.have.status(200);
                     res.body.should.have.lengthOf.at.least(1)
-                    return Posts.countDocuments();
+                    return Posts.count();
                 })
                 .then(count => {
                     res.body.should.have.lengthOf(count);
@@ -223,7 +224,7 @@ describe('The game room api (users)', function () {
                     res = _res;
                     res.should.have.status(200);
                     res.body.should.have.lengthOf.at.least(1);
-                    return Users.countDocuments();
+                    return Users.count();
                 })
                 .then(count => {
                     res.body.should.have.lengthOf(count);

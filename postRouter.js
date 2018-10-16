@@ -94,7 +94,7 @@ router.put('/:id', (req, res) => {
 
 //DELETE request for posts
 router.delete('/:id', (req, res) => {
-    Posts.findOneAndDelete(req.params.id)
+    Posts.findOneAndRemove(req.params.id)
         .then(() => {
             console.log(`Deleted post ${req.params.id}`);
             res.status(204).end();

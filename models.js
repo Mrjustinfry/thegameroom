@@ -23,37 +23,9 @@ postSchema.methods.serialize = function () {
     };
 };
 
-//switch SW-####-####-####
-
-const userSchema = mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    userName: { type: String, unique: true },
-    passWord: String,
-    email: String,
-    nintendo: String,
-    playstation: String,
-    xbox: String,
-    platform: String,
-})
-
-userSchema.methods.serialize = function () {
-    return {
-        id: this._id,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        userName: this.userName,
-        passWord: this.passWord,
-        email: this.email,
-        nintendo: this.nintendo,
-        playstation: this.playstation,
-        xbox: this.xbox,
-        platform: this.platform
-    }
-}
 
 
-const Posts = mongoose.model('posts', postSchema);
-const Users = mongoose.model('users', userSchema);
 
-module.exports = { Users, Posts };
+const Posts = mongoose.model('posts', postSchema)
+
+module.exports = { Posts };
