@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\auth",
+    "\\node_modules\\faker",
+    "\\node_modules\\faker\\lib",
+    "\\people",
     "\\public",
     "\\test"
   ],
-  "SelectedNode": "\\config.js",
+  "SelectedNode": "\\test\\testServer.js",
   "PreviewInSolutionExplorer": false
 }

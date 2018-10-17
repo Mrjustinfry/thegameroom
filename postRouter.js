@@ -2,7 +2,6 @@
 
 const express = require("express");
 const router = express.Router();
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -18,7 +17,7 @@ router.get('/', (req, res) => {
                     id: post._id,
                     title: post.title,
                     content: post.content,
-                    userName: post.userName,
+                    username: post.username,
                     date: post.date
                 }
             }

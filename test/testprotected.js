@@ -15,8 +15,8 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Protected endpoint', function () {
-    const userName = 'exampleUser';
-    const passWord = 'examplePass';
+    const username = 'exampleUser';
+    const password = 'examplePass';
     const firstName = 'Example';
     const lastName = 'User';
 
@@ -29,10 +29,10 @@ describe('Protected endpoint', function () {
     });
 
     beforeEach(function () {
-        return People.hashPassword(passWord).then(passWord =>
+        return People.hashPassword(password).then(password =>
             People.create({
-                userName,
-                passWord,
+                username,
+                password,
                 firstName,
                 lastName
             })
@@ -48,9 +48,10 @@ describe('Protected endpoint', function () {
             return chai
                 .request(app)
                 .get('/api/protected')
-                .then(() =>
-                    expect.fail(null, null, 'Request should not succeed')
-                )
+                .then(res => {
+                    //expect.fail(null, null, 'Request should not succeed')
+                    expect(res).to.have.status(401);
+                })/*
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
                         throw err;
@@ -58,13 +59,13 @@ describe('Protected endpoint', function () {
 
                     const res = err.response;
                     expect(res).to.have.status(401);
-                });
+                });*/
         });
 
         it('Should reject requests with an invalid token', function () {
             const token = jwt.sign(
                 {
-                    userName,
+                    username,
                     firstName,
                     lastName
                 },
@@ -79,9 +80,10 @@ describe('Protected endpoint', function () {
                 .request(app)
                 .get('/api/protected')
                 .set('Authorization', `Bearer ${token}`)
-                .then(() =>
-                    expect.fail(null, null, 'Request should not succeed')
-                )
+                .then(res => {
+                    //expect.fail(null, null, 'Request should not succeed')
+                    expect(res).to.have.status(401);
+                })/*
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
                         throw err;
@@ -89,13 +91,13 @@ describe('Protected endpoint', function () {
 
                     const res = err.response;
                     expect(res).to.have.status(401);
-                });
+                });*/
         });
         it('Should reject requests with an expired token', function () {
             const token = jwt.sign(
                 {
                     user: {
-                        userName,
+                        username,
                         firstName,
                         lastName
                     },
@@ -104,7 +106,7 @@ describe('Protected endpoint', function () {
                 JWT_SECRET,
                 {
                     algorithm: 'HS256',
-                    subject: userName
+                    subject: username
                 }
             );
 
@@ -112,9 +114,10 @@ describe('Protected endpoint', function () {
                 .request(app)
                 .get('/api/protected')
                 .set('authorization', `Bearer ${token}`)
-                .then(() =>
-                    expect.fail(null, null, 'Request should not succeed')
-                )
+                .then(res => {
+                    //expect.fail(null, null, 'Request should not succeed')
+                    expect(res).to.have.status(401);
+                })/*
                 .catch(err => {
                     if (err instanceof chai.AssertionError) {
                         throw err;
@@ -122,21 +125,22 @@ describe('Protected endpoint', function () {
 
                     const res = err.response;
                     expect(res).to.have.status(401);
-                });
+                });*/
         });
         it('Should send protected data', function () {
             const token = jwt.sign(
                 {
                     user: {
-                        userName,
+                        username,
                         firstName,
-                        lastName
+                        lastName,
+
                     }
                 },
                 JWT_SECRET,
                 {
                     algorithm: 'HS256',
-                    subject: userName,
+                    subject: username,
                     expiresIn: '7d'
                 }
             );

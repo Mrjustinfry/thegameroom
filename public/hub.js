@@ -1,14 +1,14 @@
 ﻿'use strict'
 
-var USERS_URL = '/users';
+var USERS_URL = '/api/users';
 var POSTS_URL = '/posts';
-
+/*
 //Get Users
 function getUsers(users) {
     console.log('Getting users');
     $.ajax({
         method: 'GET',
-        url: USERS_URL,
+        url: 'api/users',
         data: JSON.stringify(users),
         success: function () {
             console.log('gathered user data');
@@ -16,7 +16,7 @@ function getUsers(users) {
         dataType: 'json',
         contentType: 'application/json'
     });
-};
+};*/
 
 //get user by id
 function getUser(user) {
@@ -36,12 +36,13 @@ function getUser(user) {
 
 //Post users
 function addUser(user) {
-    console.log('Adding user: ' + user.userName);
+    console.log('Adding user: ' + user.username);
     $.ajax({
         method: 'POST',
         url: '/api/users',
         data: JSON.stringify(user),
         success: function () {
+            alert('Thank you for signing up for the Game Room!');
             $('.modal').toggle();
         },
         dataType: 'json',
@@ -50,14 +51,18 @@ function addUser(user) {
 }
 
 function loginUser(user) {
-    console.log(`Loggin in ${user.userName}`);
+    console.log(`Logging in ${user.username}`);
     $.ajax({
         method: 'POST',
         url: '/api/auth/login',
         data: JSON.stringify(user),
+        contentType: 'application/json',
         success: function () {
             $('#landing').hide(); //fix this
             $('.mainContainer').html(homeTemplate);
+        },
+        error: function (err) {
+            alert(err);
         }
     })
 }
@@ -104,18 +109,15 @@ function deleteUser(userId) {
 
 //add post
 function addNewPost(post) {
-    console.log('Adding new post: ' + post);
+    console.log('Adding new post: ' + post.title);
     $.ajax({
         method: 'POST',
         url: POSTS_URL,
         data: JSON.stringify(post),
         success: function (data) {
-            handleNewPost(data);
-            $('.newPostTitle').val('');
-            $('.newPostContent').val('');
             $('.containerHead').css('display', 'flex');
             $('.hubContainer').hide();
-            getAndDisplayPosts();
+            getAndDisplayPosts(data);
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -152,9 +154,9 @@ function handleNewUser() {
         addUser({
             firstName: $('#signup').find('.firstName').val(),
             lastName: $('#signup').find('.lastName').val(),
-            userName: $('#signup').find('.userName').val(),
+            username: $('#signup').find('.username').val(),
             email: $('#signup').find('.email').val(),
-            passWord: $('#signup').find('.passWord').val(),
+            password: $('#signup').find('.password').val(),
             nintendo: $('#signup').find('.nintendo').val(),
             playstation: $('#signup').find('.playstation').val(),
             xbox: $('#signup').find('.xbox').val(),
@@ -167,14 +169,14 @@ function handleLoginInfo() {
     $('#logIn').on('submit', function (e) {
         e.preventDefault();
         loginUser({
-            userName: $('#logIn').find('.userName').val(),
-            passWord: $('#logIn').find('.passWord').val()
+            username: $('#logIn').find('.username').val(),
+            password: $('#logIn').find('.password').val()
         })
     })
 }
 
 function handleNewPost() {
-    $('.moda').on('click', '#postBtn', function (e) {
+    $('.modal').on('click', '#postBtn', function (e) {
         e.preventDefault();
         addNewPost({
             title: $('.newPostForm').find('.newPostTitle').val(),

@@ -8,12 +8,12 @@ mongoose.Promise = global.Promise;
  //switch SW-####-####-####
 
 const peopleSchema = mongoose.Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true
     },
-    passWord: {
+    password: {
         type: String,
         required: true
     },
@@ -28,8 +28,8 @@ const peopleSchema = mongoose.Schema({
 
 peopleSchema.methods.serialize = function () {
     return {
-        id: this._id,
-        userName: this.userName || '',
+        //id: this._id,
+        username: this.username || '',
         firstName: this.firstName || '',
         lastName: this.lastName || '',
         email: this.email,
@@ -40,12 +40,12 @@ peopleSchema.methods.serialize = function () {
     };
 };
 
-peopleSchema.methods.validatePassword = function (passWord) {
-    return bcrypt.compare(passWord, this.passWord);
+peopleSchema.methods.validatePassword = function (password) {
+    return bcrypt.compare(password, this.password);
 };
 
-peopleSchema.statics.hashPassword = function (passWord) {
-    return bcrypt.hash(passWord, 10);
+peopleSchema.statics.hashPassword = function (password) {
+    return bcrypt.hash(password, 10);
 };
 
 const People = mongoose.model('people', peopleSchema);

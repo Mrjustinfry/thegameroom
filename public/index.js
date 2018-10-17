@@ -45,7 +45,7 @@ function signUp() {
 }
 
 function newPostRender() {
-    $('.maodal').on('click', '.postBtn', function (e) {
+    $('.mainContainer').on('click', '.postBtn', function (e) {
         e.preventDefault();
         $('.modalContent').html(newPostTemplate);
         modal.initialize();
