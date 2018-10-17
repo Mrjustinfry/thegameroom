@@ -1,136 +1,9 @@
 ﻿'use strict';
 
-/*
-var MOCK_POST_DATA = {
-    "mockPosts": [
-        {
-            "id": "12345",
-            "title": "Coolest Game Ever!",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in ligula nec elit placerat luctus." +
-                "Vivamus pellentesque bibendum iaculis.Suspendisse interdum neque nec nisl tincidunt, et efficitur elit laoreet." +
-                "Quisque dapibus, mauris id aliquet finibus, nulla lacus sagittis turpis, eget convallis erat nisl eu velit.Nunc dictum libero leo," +
-                "a semper massa venenatis commodo.Maecenas nunc felis, mollis eu hendrerit id, commodo id ipsum.Nam aliquet congue ipsum, in lobortis elit" +
-                "mollis sit amet.Aenean sollicitudin accumsan felis, sed pellentesque elit euismod sed.Nulla arcu orci, pellentesque vel viverra id, vestibulum id leo." +
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "userName": "John Doe",
-            "date": new Date().toLocaleString()
-        },
-        {
-            "id": "23456",
-            "title": "Worst Game Ever!",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in ligula nec elit placerat luctus." +
-                "Vivamus pellentesque bibendum iaculis.Suspendisse interdum neque nec nisl tincidunt, et efficitur elit laoreet." +
-                "Quisque dapibus, mauris id aliquet finibus, nulla lacus sagittis turpis, eget convallis erat nisl eu velit.Nunc dictum libero leo," +
-                "a semper massa venenatis commodo.Maecenas nunc felis, mollis eu hendrerit id, commodo id ipsum.Nam aliquet congue ipsum, in lobortis elit" +
-                "mollis sit amet.Aenean sollicitudin accumsan felis, sed pellentesque elit euismod sed.Nulla arcu orci, pellentesque vel viverra id, vestibulum id leo." +
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "userName": "Jane Doe",
-            "date": new Date().toLocaleString()
-        },
-        {
-            "id": "34567",
-            "title": "Check it out!",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in ligula nec elit placerat luctus." +
-                "Vivamus pellentesque bibendum iaculis.Suspendisse interdum neque nec nisl tincidunt, et efficitur elit laoreet." +
-                "Quisque dapibus, mauris id aliquet finibus, nulla lacus sagittis turpis, eget convallis erat nisl eu velit.Nunc dictum libero leo," +
-                "a semper massa venenatis commodo.Maecenas nunc felis, mollis eu hendrerit id, commodo id ipsum.Nam aliquet congue ipsum, in lobortis elit" +
-                "mollis sit amet.Aenean sollicitudin accumsan felis, sed pellentesque elit euismod sed.Nulla arcu orci, pellentesque vel viverra id, vestibulum id leo." +
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "userName": "Jim Doe",
-            "date": new Date().toLocaleString()
-        },
-        {
-            "id": "45678",
-            "title": "You've got to see this!",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in ligula nec elit placerat luctus." +
-                "Vivamus pellentesque bibendum iaculis.Suspendisse interdum neque nec nisl tincidunt, et efficitur elit laoreet." +
-                "Quisque dapibus, mauris id aliquet finibus, nulla lacus sagittis turpis, eget convallis erat nisl eu velit.Nunc dictum libero leo," +
-                "a semper massa venenatis commodo.Maecenas nunc felis, mollis eu hendrerit id, commodo id ipsum.Nam aliquet congue ipsum, in lobortis elit" +
-                "mollis sit amet.Aenean sollicitudin accumsan felis, sed pellentesque elit euismod sed.Nulla arcu orci, pellentesque vel viverra id, vestibulum id leo." +
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "userName": "Mary Doe",
-            "date": new Date().toLocaleString()
-        }
-    ]
-};
-
-var MOCK_USER_DATA = {
-    "mockUsers": [
-        {
-            "firstName": "Justin",
-            "lastName": "Fry",
-            "userName": "justinfry",
-            "passWord": "12345",
-            "email" : "abc@def.ghi",
-            "nintendo": "SW-1234-1234-1234",
-            "playstation": "justinfry",
-            "xbox": "justinfry",
-            "platform": "Nintendo"
-        },
-        {
-            "firstName": "George",
-            "lastName": "Washington",
-            "userName": "georgewashington",
-            "passWord": "12345",
-            "email": "abc@def.ghi",
-            "nintendo": "SW-2345-2345-2345",
-            "playstation": "george",
-            "xbox": "washington",
-            "platform": "Nintendo"
-        },
-        {
-            "firstName": "Barrack",
-            "lastName": "Obama",
-            "userName": "bobama",
-            "passWord": "12345",
-            "email": "abc@def.ghi",
-            "nintendo": "SW-3456-3456-3456",
-            "playstation": "barbama",
-            "xbox": "barrack",
-            "platform": "Playstation"
-        },
-        {
-            "firstName": "Ronald",
-            "lastName": "Reagan",
-            "userName": "rreagan",
-            "passWord": "12345",
-            "email": "abc@def.ghi",
-            "nintendo": "SW-4567-4567-4567",
-            "playstation": "Ronnie",
-            "xbox": "StarFire",
-            "platform": "Xbox"
-        },
-        {
-            "firstName": "Richard",
-            "lastName": "Nixon",
-            "userName": "iamnotacrook",
-            "passWord": "12345",
-            "email": "abc@def.ghi",
-            "nintendo": "SW-4321-4321-4321",
-            "playstation": "Nix",
-            "xbox": "DickNixon",
-            "platform": "Nintendo"
-        },
-        {
-            "firstName": "Abraham",
-            "lastName": "Lincoln",
-            "userName": "honestabe",
-            "passWord": "12345",
-            "email": "abc@def.ghi",
-            "nintendo": "SW-0101-0202-3030",
-            "playstation": "Alinc",
-            "xbox": "FourScore",
-            "platform": "Nintendo"
-        }
-    ]
-};
-*/
-
-
 function displayUsers(data) {
     for (let i = 0; i < data.length; i++) {
         $('.mainContainer').prepend(`<div class="container userBox">` +
-            `<div class="namePic"><h3 class="username">` + data[i].userName + `</h3>` +
+            `<div class="namePic"><h3 class="username">` + data[i].username + `</h3>` +
             `<img src='profile.jpg' alt="profile picture" /></div>` +
             `<div class="userInfo"><p><b>Switch Friend Code: </b></br>` + data[i].nintendo + `</p>` +
             `<p><b>PS4 Gamertag: </b></br>` + data[i].playstation + `</p>` +
@@ -143,7 +16,7 @@ function displayUsers(data) {
 function displayPosts(data) {
     for (let i = 0; i < data.length; i++) {
         $('.mainContainer').prepend(`<div class="container postBox" data-id="${data[i].id}">` +
-                `<div class="userPostBox"><p class="uName">UserName</p><img src="profile.jpg" alt="profile image" class="uPic" /></div>` +
+                `<div class="userPostBox"><p class="uName">username</p><img src="profile.jpg" alt="profile image" class="uPic" /></div>` +
                 '<div class="contentBox"><h3 class="title">' + data[i].title + '</h3>' +
                 '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
@@ -193,8 +66,9 @@ function landingTemplate() {
             <form class="logIn" for="logIn">
                 <fieldset>
                     <h2>Log in:</h2>
-                    <label>Username: <input type="text" class="usrLogin" /></label>
-                    <label>Password: <input type="password" class="usrLogin" /></label>
+
+                    <label>Username: <input type="text" class="usrLogin username" /></label>
+                    <label>Password: <input type="password" class="usrLogin password" /></label>
                     <button class="logInBtn" type="submit">Login</button>
                     <p>Not a member? </p><button id="suBtn" class="logInBtn">Sign up now!</button>
                 </fieldset>
@@ -212,8 +86,8 @@ function signupTemplate() {
                     <label><div class="sInput">First Name: </div><input type="text" min="3" class="firstName suIn" required /></label>
                     <label><div class="sInput">Last Name: </div><input type="text" min="3" class="lastName suIn" required /></label>
                     <label><div class="sInput">Email: </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
-                    <label><div class="sInput">Choose a Username: </div><input type="text" min="3" maxlength="15" class="suIn" required /></label>
-                    <label><div class="sInput">Password: </div><input type="password" class="passWord suIn" required /></label>
+                    <label><div class="sInput">Choose a Username: </div><input type="text" min="3" maxlength="15" class="username suIn" required /></label>
+                    <label><div class="sInput">Password: </div><input type="password" class="password suIn" min="10" required /></label>
                     <label><div class="sInput">Re-enter Password: </div><input type="password" min="5" maxlength="20" class="passwordtwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
@@ -246,6 +120,7 @@ function headerTemplate() {
     </div>`
 };
 
+
 function homeTemplate() {
     return `<div class="hubContainer">
             <div class="theHub">
@@ -269,7 +144,7 @@ function homeTemplate() {
 function profileTemplate() {
     return `<div class="proHead">
                     <div class="proNamePic">
-                        <h3 class="ProUsername"> + data.userName + </h3>
+                        <h3 class="ProUsername"> + data.username + </h3>
                         <img src='profile.jpg' alt="profile picture" />
                     </div>
                     <div class="ProUserInfo">
@@ -291,7 +166,7 @@ function profileTemplate() {
 function proUsernamesTemplate(data) {
     for (let i = 0; i < data.length; i++) {
         $('.proUsers').prepend(`<div class="proUserBox">` +
-            `<h3 class="listUsername">` + data[i].userName + `</h3>` +
+            `<h3 class="listUsername">` + data[i].username + `</h3>` +
             `</div>`);
     }
 }
@@ -299,7 +174,7 @@ function proUsernamesTemplate(data) {
 function proPosts(data) {
     for (let i = 0; i < data.length; i++) {
         $('.proPosts').prepend('<div class="proPostBox">' +
-            `<div class="userPostBox"><p class="proUserName">UserName</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+            `<div class="userPostBox"><p class="proUsername">username</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
             '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
             '<p class="proPostContent">' + data[i].content + '</p>' +
             '<p class="proDate">' + data[i].date + '</p></div>' +
