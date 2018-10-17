@@ -8,17 +8,17 @@ mongoose.Promise = global.Promise;
  //switch SW-####-####-####
 
 const peopleSchema = mongoose.Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true
     },
-    passWord: {
+    password: {
         type: String,
         required: true
     },
-    firstName: String,
-    lastName: String,
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
     email: String,
     nintendo: String,
     playstation: String,
@@ -28,10 +28,10 @@ const peopleSchema = mongoose.Schema({
 
 peopleSchema.methods.serialize = function () {
     return {
-        id: this._id,
-        userName: this.username,
-        firstName: this.firstName,
-        lastName: this.lastName,
+        //id: this._id,
+        username: this.username || '',
+        firstName: this.firstName || '',
+        lastName: this.lastName || '',
         email: this.email,
         nintendo: this.nintendo,
         playstation: this.playstation,
@@ -40,12 +40,12 @@ peopleSchema.methods.serialize = function () {
     };
 };
 
-peopleSchema.methods.validatePassword = function (passWord) {
-    return bcrypt.compare(passWord, this.passWord);
+peopleSchema.methods.validatePassword = function (password) {
+    return bcrypt.compare(password, this.password);
 };
 
-peopleSchema.statics.hashPassword = function (passWord) {
-    return bcrypt.hash(passWord, 10);
+peopleSchema.statics.hashPassword = function (password) {
+    return bcrypt.hash(password, 10);
 };
 
 const People = mongoose.model('people', peopleSchema);

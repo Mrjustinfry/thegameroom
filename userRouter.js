@@ -1,8 +1,8 @@
+/*
 'use strict';
 
 const express = require('express');
 const router = express.Router();
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     userName: user.userName,
-                    passWord: user.passWord,
                     email: user.email,
                     nintendo: user.nintendo,
                     playstation: user.playstation,
@@ -124,7 +123,7 @@ router.put('/:id', (req, res) => {
 
 //DELETE request for users
 router.delete('/:id', (req, res) => {
-    Users.findOneAndDelete(req.params.id)
+    Users.findOneAndRemove(req.params.id)
         .then(() => {
             console.log(`Deleted user ${req.params.id}`);
             res.status(204).end();
@@ -132,3 +131,4 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+*/

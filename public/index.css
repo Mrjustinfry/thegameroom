@@ -214,7 +214,7 @@ li {
     background-position: top left;
 }
 
-.logIn {
+#logIn {
     display: block;
     padding: 1%;
     background-color: black;
@@ -344,7 +344,6 @@ label {
 input {
     background-color: white;
     color: black;
-    
     flex: 1;
     flex-basis: 50%;
     justify-content: flex-end;
@@ -448,10 +447,12 @@ input {
     flex-grow: 1;
 }
 
-.userName {
+/*
+.username {
     font-family: 'Press Start 2P', cursive;
     font-size: 70%;
 }
+*/
 
 .proHead {
     display: flex;
@@ -503,5 +504,6 @@ input {
 }
 
 @media only screen and (min-width: 687px) {
-
 }
+
+
