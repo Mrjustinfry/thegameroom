@@ -1,37 +1,99 @@
 ﻿'use strict'
 
-var USERS_URL = '/users';
+var USERS_URL = '/api/users';
 var POSTS_URL = '/posts';
+/*
+//Get Users
+function getUsers(users) {
+    console.log('Getting users');
+    $.ajax({
+        method: 'GET',
+        url: 'api/users',
+        data: JSON.stringify(users),
+        success: function () {
+            console.log('gathered user data');
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+};*/
 
+//get user by id
+function getUser(user) {
+    console.log(`getting user`);
+    $.ajax({
+        method: 'GET',
+        url: USERS_URL + `/` + user.id,
+        data: JSON.stringify(user),
+        success: function () {
+
+            console.log(`gathered user data for ${user.id}`);
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+};
 
 //Post users
 function addUser(user) {
-    console.log('Adding user: ' + user);
+    console.log('Adding user: ' + user.username);
     $.ajax({
         method: 'POST',
-        url: USERS_URL,
+        url: '/api/users',
         data: JSON.stringify(user),
-        success: function (data) {
-            getAndDisplayUsers();
+        success: function () {
+            alert('Thank you for signing up for the Game Room!');
+            $('.modal').toggle();
         },
         dataType: 'json',
         contentType: 'application/json'
     });
 }
 
-//update user
-function updateUser(user) {
-    console.log('Updating user `' + user.id + '`');
+function loginUser(user) {
+    console.log(`Logging in ${user.username}`);
     $.ajax({
-        url: USERS_URL + '/' + item.id,
-        method: 'PUT',
+        method: 'POST',
+        url: '/api/auth/login',
         data: JSON.stringify(user),
-        success: function (data) {
-            getAndDisplayUsers()
+        contentType: 'application/json',
+        success: function () {
+            $('#landing').hide(); //fix this
+            $('.mainContainer').html(homeTemplate);
         },
+        error: function (err) {
+            alert(err);
+        }
+    })
+}
+
+function api({ method, url, data }) {
+    return $.ajax({
+        url,
+        method,
+        data,
         dataType: 'json',
         contentType: 'application/json'
-    });
+    })
+}
+
+//update user
+function updateUser(user) {
+    api({
+        url: USERS_URL + '/' + user.id,
+        method: 'PUT',
+        data: JSON.stringify(user)
+    })
+    console.log('Updating user `' + user.id + '`');
+    /* $.ajax({
+         url: USERS_URL + '/' + user.id,
+         method: 'PUT',
+         data: JSON.stringify(user),
+         success: success, //fix this
+         dataType: 'json',
+         contentType: 'application/json'
+         
+     });*/
 }
 
 //delete user
@@ -40,19 +102,22 @@ function deleteUser(userId) {
     $.ajax({
         url: USERS_URL + '/' + userId,
         method: 'DELETE',
-        success: getAndDisplayUsers()
+        success: success //fix this
     });
 }
 
+
 //add post
 function addNewPost(post) {
-    console.log('Adding new post: ' + post);
+    console.log('Adding new post: ' + post.title);
     $.ajax({
         method: 'POST',
         url: POSTS_URL,
         data: JSON.stringify(post),
         success: function (data) {
-            getAndDisplayPosts();
+            $('.containerHead').css('display', 'flex');
+            $('.hubContainer').hide();
+            getAndDisplayPosts(data);
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -65,7 +130,9 @@ function deletePost(postId) {
     $.ajax({
         url: POSTS_URL + '/' + postId,
         method: 'DELETE',
-        success: getAndDisplayPosts()
+        success: function () {
+            console.log('Successfully deleted post');
+        }
     });
 }
 
@@ -76,38 +143,50 @@ function updatePost(post) {
         url: POSTS_URL + '/' + post.id,
         method: 'PUT',
         data: post,
-        success: function (data) {
-            getAndDisplayPosts();
-        }
+        success: success
     });
 }
 
 
-function createUser() {
-    $('#signup').on('submit', function (e) {
+function handleNewUser() {
+    $('.modal').on('click', '#signupuser', function (e) {
         e.preventDefault();
         addUser({
-            firstName: $(e.currentTarget).find('.firstName').val(),
-            lastName: $(e.currentTarget).find('.lastName').val(),
-            userName: $(e.currentTarget).find('.userName').val(),
-            passWord: $(e.currentTarget).find('.passWord').val(),
-            nintendo: $(e.currentTarget).find('.switch').val(),
-            playstation: $(e.currentTarget).find('.playstation').val(),
-            xbox: $(e.currentTarget).find('.xbox').val()
-        })
-    })
-};
-
-function addUser(user) {
-    console.log('Adding user: ' + user);
-    $.ajax({
-        method: 'POST',
-        url: USERS_URL,
-        data: JSON.stringify(user),
-        success: function (data) {
-            getAndDisplayUsers();
-        },
-        dataType: 'json',
-        contentType: 'application/json'
+            firstName: $('#signup').find('.firstName').val(),
+            lastName: $('#signup').find('.lastName').val(),
+            username: $('#signup').find('.username').val(),
+            email: $('#signup').find('.email').val(),
+            password: $('#signup').find('.password').val(),
+            nintendo: $('#signup').find('.nintendo').val(),
+            playstation: $('#signup').find('.playstation').val(),
+            xbox: $('#signup').find('.xbox').val(),
+            platform: $('#signup').find('.platform').val()
+        });
     });
 }
+
+function handleLoginInfo() {
+    $('#logIn').on('submit', function (e) {
+        e.preventDefault();
+        loginUser({
+            username: $('#logIn').find('.username').val(),
+            password: $('#logIn').find('.password').val()
+        })
+    })
+}
+
+function handleNewPost() {
+    $('.modal').on('click', '#postBtn', function (e) {
+        e.preventDefault();
+        addNewPost({
+            title: $('.newPostForm').find('.newPostTitle').val(),
+            content: $('.newPostForm').find('.newPostContent').val()
+        })
+    })
+}
+
+$(function () {
+    handleNewUser();
+    handleNewPost();
+    handleLoginInfo();
+});

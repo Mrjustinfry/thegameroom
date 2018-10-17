@@ -1,50 +1,172 @@
 'use strict';
 
-
-function getUsers(callbackFn) {
-    setTimeout(function () { callbackFn(MOCK_USER_DATA) }, 1);
+function modalOpen() {
+    $('.modal').prop('hidden', false);
 }
 
-function getPosts(callbackFn) {
-    setTimeout(function () { callbackFn(MOCK_POST_DATA) }, 1);
+function modalClose() {
+    $('.close').on('click', function (e) {
+        e.preventDefault();
+        $('.modal').prop('hidden', true);
+    })
 }
+/*
+const modal = {
+    open: () => {
+        $('.modal').prop('hidden', false);
+    },
+    close: () => {
+        $('.close').on('click', function (e) {
+            e.preventDefault();
+            $('.modal').prop('hidden', true);
+        })
+    }
+}*/
+
+
+class Modal {
+    initialize() {
+        $('.modal').prop('hidden', false);
+        $('.close').on('click', function (e) {
+            e.preventDefault();
+            $('.modal').prop('hidden', true);
+        })
+    }
+}
+
+const modal = new Modal()
+
+function signUp() {
+    $('#suBtn').on('click', function(e) {
+        e.preventDefault();
+        $('.modalContent').html(signupTemplate);
+        modal.initialize();
+    })
+}
+
+function newPostRender() {
+    $('.mainContainer').on('click', '.postBtn', function (e) {
+        e.preventDefault();
+        $('.modalContent').html(newPostTemplate);
+        modal.initialize();
+    })
+}
+
+function handleGamers() {
+    $('main').find('.gameBtn').on('click', function (e) {
+        e.preventDefault();
+        $('.hubContainer').toggle();
+        $('.mainContainer').html(getUsers);
+    })
+}
+
+function handleLogin() {
+    $('.logInBtn').on('click', function (e) {
+        e.preventDefault();
+        $('#landing').hide(); //fix this
+        $('.mainContainer').html(homeTemplate);
+    })
+};
+
+function createNewPost() {
+    $('.newPostForm').on('submit', function (e) {
+        e.preventDefault();
+        addNewPost();
+        $('.modal').toggle();
+    })
+
+};
+
+function displayAllPosts() {
+    $('.allBtn').on('click', function (e) {
+        e.preventDefault();
+        getPosts();
+        $('.mainContainer').html(displayPosts);
+    })
+};
 
 function getAndDisplayUsers() {
-    getUsers(displayUsers);
-};
+    console.log('Retrieving users')
+    $.getJSON(USERS_URL, function (users) {
+        $('.mainContainer').html(displayUsers(users));
+    });
+}
 
 function getAndDisplayPosts() {
-    getPosts(displayPosts);
-};
+    console.log('Retrieving posts')
+    $.getJSON(POSTS_URL, function (posts) {
+        $('.mainContainer').html(displayPosts(posts));
+    })
+}
 
-function getAndNewPost() {
-    getUsers(newPostTemplate)
+function handleProfile() {
+        $('.hubContainer').hide();
+        $('.containerHead').css('display', 'flex');
+        $('.mainContainer').css('flex-flow', 'column wrap');
+        $('.mainContainer').html(profileTemplate);
+        $.getJSON(USERS_URL, function (users) {
+            proUsernamesTemplate(users);
+        })
+        $.getJSON(POSTS_URL, function (posts) {
+            proPosts(posts);
+        })
+}
+
+function handleDeletePost() {
+        $('.mainContainer').on('click', '.deletePost', function (e) {
+            e.preventDefault();
+            alert('Are you sure you want to delete this post?');
+            if (confirm('This post has been deleted')) {
+                deletePost(
+                    $('.postBox').data('id'));
+                getAndDisplayPosts();
+            } else {
+                getAndDisplayPosts();
+            }
+        });
 }
 
 $(function () {
-    $('.mBtn').on('click', function (e) {
+    signUp();
+    newPostRender();
+   // handleLogin();
+    createNewPost();
+    $('.mainContainer').on('click', '.gameBtn', function (e) {
         e.preventDefault();
-        getAndDisplayPosts();
-    })
-    $('.pBtn').on('click', function (e) {
-        e.preventDefault()
-        getAndNew();
-    })
-    $('.gBtn').on('click', function (e) {
-        e.preventDefault();
+        $('.hubContainer').hide();
+        $('.containerHead').css('display', 'flex');
+        $('.mainContainer').css('flex-flow', 'row wrap');
         getAndDisplayUsers();
     })
-    $('.hBtn').on('click', function (e) {
+    $('.mainContainer').on('click', '.profileBtn', function (e) {
         e.preventDefault();
+        handleProfile();
+    })
+    $('.containerHead').on('click', '.hBtn', function (e) {
+        e.preventDefault();
+        handleProfile();
+    })
+    $('.mainContainer').on('click', '.allBtn', function (e) {
+        e.preventDefault();
+        $('.hubContainer').hide();
+        $('.containerHead').css('display', 'flex');
+        $('.mainContainer').css('flex-flow', 'column');
         getAndDisplayPosts();
     })
-    $('.logInBtn').on('click', function (e) {
+    $('.containerHead').on('click', '.gBtn', function (e) {
         e.preventDefault();
-        $('.toggle').toggle();
+        $('.mainContainer').html('');
+        $('.mainContainer').css('flex-flow', 'row wrap');
+        getAndDisplayUsers();
+    })
+    $('.containerHead').on('click', '.pBtn', function (e) {
+        e.preventDefault();
+        $('.mainContainer').html('');
+        $('.mainContainer').css('flex-flow', 'column');
         getAndDisplayPosts();
     })
-    $('.suBtn').on('click', function (e) {
-        e.preventDefault();
-        $('main').html(signupTemplate)
+    $('.eBtn').on('click', function () {
+        location.href = location.href;
     })
+    handleDeletePost();
 })

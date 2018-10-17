@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\auth",
+    "\\node_modules\\faker",
+    "\\node_modules\\faker\\lib",
+    "\\people",
+    "\\public",
+    "\\test"
+  ],
+<<<<<<< HEAD
+  "SelectedNode": "\\config.js",
+=======
+  "SelectedNode": "\\test\\testServer.js",
+>>>>>>> backend
+  "PreviewInSolutionExplorer": false
+}
