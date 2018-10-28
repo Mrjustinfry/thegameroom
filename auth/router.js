@@ -19,19 +19,25 @@ const createAuthToken = function (user) {
     });
 };
 
+ 
+
 const localAuth = passport.authenticate('local', { session: false });
 router.use(bodyParser.json());
 router.post('/login', localAuth, (req, res) => {
-    console.log('user logging in');
-    const authToken = createAuthToken(req.user.serialize());
-    res.json({ authToken });
+    console.log(`user logging in`);
+    const user = req.user.serialize();
+    const authToken = createAuthToken(user);
+    res.json({ authToken, user });
+    console.log(user);
 });
+
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/refresh', jwtAuth, (req, res) => {
+    const user = req.user;
     const authToken = createAuthToken(req.user);
-    res.json({ authToken });
+    res.json({ authToken, user });
 });
 
 module.exports = { router };
