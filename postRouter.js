@@ -4,9 +4,10 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const ObjectID = require('mongodb').ObjectID;
 
 const { Posts } = require("./models");
-
+const { People } = require('./people/models');
 
 //GET request for posts
 router.get('/', (req, res) => {
@@ -17,8 +18,9 @@ router.get('/', (req, res) => {
                     id: post._id,
                     title: post.title,
                     content: post.content,
-                    username: post.username,
-                    date: post.date
+                    user: post.user ? post.user.username: 'unknown',
+                    date: post.date,
+                    comments: post.comments
                 }
             }
             ))
@@ -38,6 +40,8 @@ router.get('/:id', (req, res) => {
                 id: post._id,
                 title: post.title,
                 content: post.content,
+                user: post.user ? post.user.username : 'unknown',
+                comments: post.comments,
                 date: post.date
             });
         })
@@ -47,6 +51,77 @@ router.get('/:id', (req, res) => {
         });
 });
 
+/*
+//Get post by user_id
+router.get('/:user_id', (req, res) => {
+    Posts
+        .findById(req.params.user_id)
+        .then(post => {
+            res.json({
+                id: post._id,
+                title: post.title,
+                content: post.content,
+                user: post.user ? post.user.username : 'unknown',
+                comments: post.comments,
+                date: post.date
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: 'Something went wrong' });
+        })
+})
+*/
+
+//Post for posts
+router.post('/', (req, res) => {
+    const requiredFields = ['title', 'content', 'user_id'];
+    requiredFields.forEach(field => {
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`;
+            console.error(message);
+            return res.status(400).send(message);
+        }
+    });
+
+    People
+        .findById(req.body.user_id)
+        .then(user => {
+            if (user) {
+                Posts
+                    .create({
+                        title: req.body.title,
+                        content: req.body.content,
+                        user: ObjectID(req.body.user_id),
+                        date: req.body.date
+                    })
+                    .then(post => res.status(201).json({
+                        id: post.id,
+                        user:  user.username,
+                        content: post.content,
+                        title: post.title,
+                        date: post.date,
+                        comments: post.comments
+                    }))
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).json({ error: 'Something went wrong' });
+                    });
+            }
+            else {
+                const message = `User not found`;
+                console.error(message);
+                return res.status(400).send(message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'something went wrong' });
+        });
+});
+
+
+/*
 //POST request for posts
 router.post('/', jsonParser, (req, res) => {
     const requiredInfo = ['title', 'content'];
@@ -68,6 +143,7 @@ router.post('/', jsonParser, (req, res) => {
             res.status(500).json({ error: 'something went wrong' });
         })
 });
+*/
 
 //PUT request for posts
 router.put('/:id', (req, res) => {
@@ -93,7 +169,7 @@ router.put('/:id', (req, res) => {
 
 //DELETE request for posts
 router.delete('/:id', (req, res) => {
-    Posts.findOneAndRemove(req.params.id)
+    Posts.findByIdAndRemove(req.params.id)
         .then(() => {
             console.log(`Deleted post ${req.params.id}`);
             res.status(204).end();

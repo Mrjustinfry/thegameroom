@@ -1,10 +1,11 @@
 'use strict';
-global.DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
+//global.TEST_DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const { app, runServer, closeServer } = require('../server');
 const { People } = require('../people');
+const { TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
@@ -20,6 +21,7 @@ describe('/api/user', function () {
     const playstation = "example";
     const xbox = "example";
     const platform = "example";
+
     const usernameB = 'exampleUserB';
     const passwordB = 'examplePassB';
     const firstNameB = 'ExampleB';
@@ -31,7 +33,7 @@ describe('/api/user', function () {
     const platformB = "exampleB";
 
     before(function () {
-        return runServer(DATABASE_URL);
+        return runServer(TEST_DATABASE_URL);
     });
 
     after(function () {
@@ -457,6 +459,7 @@ describe('/api/user', function () {
                         expect(res).to.have.status(201);
                         expect(res.body).to.be.an('object');
                         expect(res.body).to.have.keys(
+                            'id',
                             'username',
                             'firstName',
                             'lastName',
@@ -503,6 +506,7 @@ describe('/api/user', function () {
                         expect(res).to.have.status(201);
                         expect(res.body).to.be.an('object');
                         expect(res.body).to.have.keys(
+                            'id',
                             'username',
                             'firstName',
                             'lastName'
@@ -560,7 +564,9 @@ describe('/api/user', function () {
                         expect(res).to.have.status(200);
                         expect(res.body).to.be.an('array');
                         expect(res.body).to.have.length(2);
-                        expect(res.body[0]).to.deep.equal({
+                        const userA = res.body.find(user => user.username === username);
+                        const userB = res.body.find(user => user.username === usernameB);
+                        expect(userA).to.deep.equal({
                             username,
                             firstName,
                             lastName,
@@ -568,9 +574,11 @@ describe('/api/user', function () {
                             playstation,
                             nintendo,
                             xbox,
-                            platform
+                            platform,
+                            id: userA.id
                         });
-                        expect(res.body[1]).to.deep.equal({
+                        expect(userB).to.deep.equal({
+                            id: userB.id,
                             username: usernameB,
                             firstName: firstNameB,
                             lastName: lastNameB,

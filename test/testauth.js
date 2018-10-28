@@ -1,6 +1,6 @@
 
 'use strict';
-global.DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
+//global.TEST_DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const { app, runServer, closeServer } = require('../server');
 const { People } = require('../people');
 const { JWT_SECRET } = require('../config');
+const { TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
@@ -20,7 +21,7 @@ describe('Auth endpoints', function () {
     const lastName = 'User';
 
     before(function () {
-        return runServer(DATABASE_URL);
+        return runServer(TEST_DATABASE_URL);
     });
 
     after(function () {
@@ -109,6 +110,7 @@ describe('Auth endpoints', function () {
                         algorithm: ['HS256']
                     });
                     expect(payload.user).to.deep.equal({
+                        id: payload.user.id,
                         username,
                         firstName,
                         lastName
@@ -230,6 +232,7 @@ describe('Auth endpoints', function () {
                     const payload = jwt.verify(token, JWT_SECRET, {
                         algorithm: ['HS256']
                     });
+                    //console.log(payload.exp, decode.exp);
                     expect(payload.user).to.deep.equal({
                         username,
                         firstName,

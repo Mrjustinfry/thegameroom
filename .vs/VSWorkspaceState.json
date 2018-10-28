@@ -2,12 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\auth",
-    "\\node_modules\\faker",
-    "\\node_modules\\faker\\lib",
     "\\people",
     "\\public",
     "\\test"
   ],
-  "SelectedNode": "\\test\\testServer.js",
+  "SelectedNode": "\\public\\arcades.jpg",
   "PreviewInSolutionExplorer": false
 }

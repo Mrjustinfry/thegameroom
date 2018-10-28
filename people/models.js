@@ -26,9 +26,21 @@ const peopleSchema = mongoose.Schema({
     platform: String,
 });
 
+/*
+peopleSchema.pre('find', function (next) {
+    this.populate('user');
+    next();
+});
+
+peopleSchema.pre('findOne', function (next) {
+    this.populate('user');
+    next();
+});
+*/
+
 peopleSchema.methods.serialize = function () {
     return {
-        //id: this._id,
+        id: this._id,
         username: this.username || '',
         firstName: this.firstName || '',
         lastName: this.lastName || '',
@@ -48,6 +60,6 @@ peopleSchema.statics.hashPassword = function (password) {
     return bcrypt.hash(password, 10);
 };
 
-const People = mongoose.model('people', peopleSchema);
+let People = mongoose.model('people', peopleSchema);
 
 module.exports = { People };

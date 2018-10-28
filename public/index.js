@@ -1,35 +1,13 @@
 'use strict';
 
-function modalOpen() {
-    $('.modal').prop('hidden', false);
-}
-
-function modalClose() {
-    $('.close').on('click', function (e) {
-        e.preventDefault();
-        $('.modal').prop('hidden', true);
-    })
-}
-/*
-const modal = {
-    open: () => {
-        $('.modal').prop('hidden', false);
-    },
-    close: () => {
-        $('.close').on('click', function (e) {
-            e.preventDefault();
-            $('.modal').prop('hidden', true);
-        })
-    }
-}*/
-
 
 class Modal {
     initialize() {
         $('.modal').prop('hidden', false);
-        $('.close').on('click', function (e) {
+        $('.modal').on('click', '.close', function (e) {
             e.preventDefault();
-            $('.modal').prop('hidden', true);
+            //$('.modal').prop('hidden', true);
+            $('.modal').hide();
         })
     }
 }
@@ -40,14 +18,29 @@ function signUp() {
     $('#suBtn').on('click', function(e) {
         e.preventDefault();
         $('.modalContent').html(signupTemplate);
+        $('.modal').toggle();
         modal.initialize();
     })
 }
 
+
+function validatePass() {
+    $(".modal").on('focus', 'passwordTwo', function () {
+        var password = $(".password").val();
+        var confirmPassword = $(".passwordTwo").val();
+        if (password != confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        return true;
+    });
+};
+
 function newPostRender() {
-    $('.mainContainer').on('click', '.postBtn', function (e) {
+    $('#profileContainer').on('click', '.proPostBtn', function (e) {
         e.preventDefault();
         $('.modalContent').html(newPostTemplate);
+        $('.modal').show();
         modal.initialize();
     })
 }
@@ -55,18 +48,10 @@ function newPostRender() {
 function handleGamers() {
     $('main').find('.gameBtn').on('click', function (e) {
         e.preventDefault();
-        $('.hubContainer').toggle();
         $('.mainContainer').html(getUsers);
     })
 }
 
-function handleLogin() {
-    $('.logInBtn').on('click', function (e) {
-        e.preventDefault();
-        $('#landing').hide(); //fix this
-        $('.mainContainer').html(homeTemplate);
-    })
-};
 
 function createNewPost() {
     $('.newPostForm').on('submit', function (e) {
@@ -77,10 +62,18 @@ function createNewPost() {
 
 };
 
+function showUserCard() {
+    $('#profileContainer').on('click', '.listUsername', function (e) {
+        e.preventDefault();
+        getUserCard($(this).data('id'));
+    })
+}
+
 function displayAllPosts() {
     $('.allBtn').on('click', function (e) {
         e.preventDefault();
         getPosts();
+        $('#profileContainer').hide();
         $('.mainContainer').html(displayPosts);
     })
 };
@@ -99,41 +92,110 @@ function getAndDisplayPosts() {
     })
 }
 
-function handleProfile() {
-        $('.hubContainer').hide();
-        $('.containerHead').css('display', 'flex');
-        $('.mainContainer').css('flex-flow', 'column wrap');
-        $('.mainContainer').html(profileTemplate);
-        $.getJSON(USERS_URL, function (users) {
-            proUsernamesTemplate(users);
-        })
-        $.getJSON(POSTS_URL, function (posts) {
-            proPosts(posts);
-        })
+function navProfile() {
+    $('.containerHead').on('click', '.hBtn', function (e) {
+        e.preventDefault();
+        $('.mainContainer').html('');
+        $('#profileContainer').show();
+    })
+}
+
+
+function renderDeletePost() {
+        $('#profileContainer').on('click', '.deletePost', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            getPostDelete(id);
+            $('.modal').show();
+            modal.initialize();
+        });
 }
 
 function handleDeletePost() {
-        $('.mainContainer').on('click', '.deletePost', function (e) {
-            e.preventDefault();
-            alert('Are you sure you want to delete this post?');
-            if (confirm('This post has been deleted')) {
-                deletePost(
-                    $('.postBox').data('id'));
-                getAndDisplayPosts();
-            } else {
-                getAndDisplayPosts();
-            }
+    $('.modal').on('click', '#delPost', function (e) {
+        e.preventDefault();
+        deletePost($(this).data('id'));
+        $('.modal').toggle();
+    })
+}
+
+function renderDeleteUser() {
+    $('#profileContainer').on('click', '.deleteProfile', function (e) {
+        e.preventDefault();
+        $('.modalContent').html(youSureTemplate);
+        $('.modal').show();
+        modal.initialize();
+    });
+}
+
+function handleDeleteUser() {
+    $('.modalContent').on('click', '#del', function (e) {
+        e.preventDefault();
+        deleteUser({
+            id: $('.proNamePic').data('id'),
+        })
+    })
+}
+
+function renderEditProfile() {
+    $('#profileContainer').on('click', '.editProfile', function (e) {
+        e.preventDefault();
+        getUserEdit();
+        $('.modal').toggle();
+        modal.initialize();
+    })
+}
+
+function renderEditPost() {
+    $('#profileContainer').on('click', '#editPost', function (e) {
+        e.preventDefault();
+        let id = $(this).closest('#editPost').data('id');
+        getPostEdit(id);
+        $('.modal').toggle();
+        modal.initialize();
+    })
+}
+
+function handleEditProfile() {
+    $('.modal').on('click', '#editProfileBtn', function (e) {
+        e.preventDefault();
+        updateUser({
+            id:  $('.proNamePic').data('id'),
+            email: $('#editProfile').find('.email').val(),
+            nintendo: $('#editProfile').find('.nintendo').val(),
+            playstation: $('#editProfile').find('.playstation').val(),
+            xbox: $('#editProfile').find('.xbox').val(),
+            platform: $('#editProfile').find('.platform').val()
         });
+    });
+}
+
+function handleEditPost() {
+    $('.modal').on('click', '#editPostBtn', function (e) {
+        e.preventDefault();
+        updatePost({
+            id: $(this).data('id'),
+            user: $('#profileContainer').find('.proNamePic').data('id'),
+            title: $('#editPostForm').find('#editTitle').val(),
+            content: $('#editPostForm').find('#editContent').val()
+        })
+    })
 }
 
 $(function () {
     signUp();
     newPostRender();
-   // handleLogin();
     createNewPost();
+    navProfile();
+    renderEditProfile();
+    handleEditProfile();
+    renderEditPost();
+    handleEditPost();
+    renderDeleteUser();
+    handleDeleteUser();
+    showUserCard();
     $('.mainContainer').on('click', '.gameBtn', function (e) {
         e.preventDefault();
-        $('.hubContainer').hide();
         $('.containerHead').css('display', 'flex');
         $('.mainContainer').css('flex-flow', 'row wrap');
         getAndDisplayUsers();
@@ -142,25 +204,23 @@ $(function () {
         e.preventDefault();
         handleProfile();
     })
-    $('.containerHead').on('click', '.hBtn', function (e) {
-        e.preventDefault();
-        handleProfile();
-    })
     $('.mainContainer').on('click', '.allBtn', function (e) {
         e.preventDefault();
-        $('.hubContainer').hide();
+        $('#profileContainer').hide();
         $('.containerHead').css('display', 'flex');
         $('.mainContainer').css('flex-flow', 'column');
         getAndDisplayPosts();
     })
     $('.containerHead').on('click', '.gBtn', function (e) {
         e.preventDefault();
+        $('#profileContainer').hide();
         $('.mainContainer').html('');
         $('.mainContainer').css('flex-flow', 'row wrap');
         getAndDisplayUsers();
     })
     $('.containerHead').on('click', '.pBtn', function (e) {
         e.preventDefault();
+        $('#profileContainer').hide();
         $('.mainContainer').html('');
         $('.mainContainer').css('flex-flow', 'column');
         getAndDisplayPosts();
@@ -168,5 +228,6 @@ $(function () {
     $('.eBtn').on('click', function () {
         location.href = location.href;
     })
+    renderDeletePost();
     handleDeletePost();
 })

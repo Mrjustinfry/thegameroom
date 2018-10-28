@@ -1,6 +1,6 @@
 
 'use strict';
-global.DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
+//const TEST_DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 const { Posts } = require('../models');
 const { People } = require('../people/models');
 const { closeServer, runServer, app } = require('../server');
-const { DATABASE_URL } = require('../config');
+const { TEST_DATABASE_URL } = require('../config');
 
 function tearDownDb() {
     return new Promise((resolve, reject) => {
@@ -34,29 +34,23 @@ function seedPostData() {
     }
     return Posts.insertMany(seedData);
 }
-
+/*
 function seedUserData() {
-    console.info('seeding data');
-    const seedUserData = [];
-    for (let i = 1; i <= 10; i++) {
-        seedUserData.push({
-            firstName: faker.name.firstName,
-            lastName: faker.name.lastName,
-            username: faker.internet.username,
-            password: faker.random.word,
-            email: faker.internet.email,
-            nintendo: faker.random.number,
-            playstation: faker.random.word,
-            xbox: faker.random.word,
-            platform: faker.random.word
+
+        const newUser = ({
+            user_id: '4bce3f877361c54094acb4ca',
+            firstName: 'john',
+            lastName: 'doe',
+            username: 'mrjohnddoee',
+            password: 'Thinkful101'
         });
-    }
-    return People.insertMany(seedUserData);
-}
+    
+    return People.create(newUser);
+}*/
 
 describe('The game room api (posts)', function () {
     before(function () {
-        return runServer(DATABASE_URL);
+        return runServer(TEST_DATABASE_URL);
     });
 
     beforeEach(function () {
@@ -112,7 +106,7 @@ describe('The game room api (posts)', function () {
                     res.body.should.have.a.lengthOf.at.least(1);
                     res.body.forEach(function (post) {
                         post.should.be.a('object');
-                        post.should.include.keys('id', 'title', 'content');
+                        post.should.include.keys('id', 'title', 'content', 'user');
                     });
                     resPost = res.body[0];
                     return Posts.findById(resPost.id)
@@ -120,17 +114,35 @@ describe('The game room api (posts)', function () {
                 .then(post => {
                     resPost.title.should.equal(post.title);
                     resPost.content.should.equal(post.content);
+                    resPost.user.should.equal('unknown');
                 })
         })
     });
 
     describe('Post request for posts', function () {
         it('Should create a new post', function () {
-
-            const newPost = {
-                title: faker.lorem.words(),
-                content: faker.lorem.sentences()
+            
+            const newUser = {
+                //user_id: '4bce3f877361c54094acb4ca',
+                firstName: 'john',
+                lastName: 'doe',
+                username: 'mrjohnddoee',
+                password: 'Thinkful101'
             }
+            return People.create(newUser);
+            console.log('newUser =', newUser)
+            const newPost = {
+                user_id: newUser._id,
+                user: newUser.username,
+                title: 'hello',
+                content: 'world'              
+            }
+            console.log('newPost =', newPost)
+
+            return chai.request(app)
+                .post('/api/users')
+                .send(newUser)
+                .then(() => {
 
             return chai.request(app)
                 .post('/posts')
@@ -148,6 +160,8 @@ describe('The game room api (posts)', function () {
                 .then(post => {
                     post.title.should.equal(newPost.title);
                     post.content.should.equal(newPost.content);
+                    
+                })
                 })
         })
     })

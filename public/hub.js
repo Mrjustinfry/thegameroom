@@ -2,6 +2,8 @@
 
 var USERS_URL = '/api/users';
 var POSTS_URL = '/posts';
+
+
 /*
 //Get Users
 function getUsers(users) {
@@ -19,15 +21,16 @@ function getUsers(users) {
 };*/
 
 //get user by id
-function getUser(user) {
+function getUserEdit(user) {
+    let id = $('.proNamePic').data('id');
     console.log(`getting user`);
     $.ajax({
         method: 'GET',
-        url: USERS_URL + `/` + user.id,
+        url: `/api/users/` + id,
         data: JSON.stringify(user),
-        success: function () {
-
-            console.log(`gathered user data for ${user.id}`);
+        success: function (data) {
+            console.log(`gathered user data for ${user}`);
+            $('.modalContent').html(editProfileTemplate(data));
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -35,18 +38,26 @@ function getUser(user) {
 };
 
 //Post users
-function addUser(user) {
+function addUser(user) { 
     console.log('Adding user: ' + user.username);
     $.ajax({
         method: 'POST',
         url: '/api/users',
         data: JSON.stringify(user),
-        success: function () {
-            alert('Thank you for signing up for the Game Room!');
-            $('.modal').toggle();
-        },
         dataType: 'json',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        success: function () {
+            $('.modalContent').html(thankYou);
+            modal.initialize();
+            /*
+            $('.close').on('click', function (e) {
+                e.preventDefault();
+                $('.modal').toggle();
+            })*/
+        },
+        error: function () {
+            alert('It seems like something is missing. Make sure everything is filled in correctly and try again.');
+        }
     });
 }
 
@@ -57,12 +68,45 @@ function loginUser(user) {
         url: '/api/auth/login',
         data: JSON.stringify(user),
         contentType: 'application/json',
-        success: function () {
-            $('#landing').hide(); //fix this
-            $('.mainContainer').html(homeTemplate);
+        success: function (data) {
+            handleProfile(data);
         },
-        error: function (err) {
-            alert(err);
+        error: function () {
+            alert('Incorrect username and/or password');
+        }
+    })
+}
+
+function handleLoginInfo() {
+    $('#logIn').on('submit', function (e) {
+        e.preventDefault();
+        loginUser({
+            username: $(this).find('.username').val(),
+            password: $(this).find('.password').val(),
+        })
+    })
+}
+
+
+function handleProfile(data) {
+    $('#landing').hide();
+    $('.containerHead').css('display', 'flex');
+    $('.mainContainer').css('flex-flow', 'column wrap');
+    $('#profileContainer').html(profileTemplate(data.user))
+    let theUser = data.user.username;
+    $.getJSON(USERS_URL, function (users) {
+        proUsernamesTemplate(users);
+    })
+    $.getJSON(POSTS_URL, function (data) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].user == theUser) {
+                $('.proPosts').prepend(`<div class="proPostBox" data-id="${data[i].id}">` +
+                    `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+                    '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
+                    '<p class="proPostContent">' + data[i].content + '</p>' +
+                    '<p class="proDate">' + data[i].date + `</p><button class="editPost" id="editPost" data-id="${data[i].id}">Edit</button><button data-id="${data[i].id}" class="deletePost">Delete</button></div>` +
+                    '</div>');
+            } 
         }
     })
 }
@@ -79,45 +123,88 @@ function api({ method, url, data }) {
 
 //update user
 function updateUser(user) {
+    let id = $('main').find('.proNamePic').data('id');
     api({
-        url: USERS_URL + '/' + user.id,
+        url: USERS_URL + '/' + id,
         method: 'PUT',
         data: JSON.stringify(user)
     })
     console.log('Updating user `' + user.id + '`');
-    /* $.ajax({
-         url: USERS_URL + '/' + user.id,
-         method: 'PUT',
-         data: JSON.stringify(user),
-         success: success, //fix this
-         dataType: 'json',
-         contentType: 'application/json'
-         
-     });*/
+    $('.modal').hide();
+    $.getJSON(USERS_URL + '/' + id, function (user) {
+        handleProfile(user);
+    });
+}
+
+//update post
+function updatePost(post) {
+    api({
+        url: POSTS_URL + `/` + post.id,
+        method: 'PUT',
+        data: JSON.stringify(post)
+    })
+    console.log(`updating post ${post.id}`);
+    $('.modal').hide();
+    let theUser = post.user;
+    $('.proPosts').html('');
+    $.getJSON(USERS_URL + '/' + theUser, function (user) {
+        $.getJSON(POSTS_URL, function (data) {
+            for (let i = 0; i < data.length; i++) {
+                if (user.username === data[i].user) {
+                    $('.proPosts').prepend(`<div class="proPostBox" data-id="${data[i].id}">` +
+                        `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+                        '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
+                        '<p class="proPostContent">' + data[i].content + '</p>' +
+                        '<p class="proDate">' + data[i].date + `</p><button class="editPost" id="editPost" data-id="${data[i].id}">Edit</button><button data-id="${data[i].id}" class="deletePost">Delete</button></div>` +
+                        '</div>');
+                } 
+            }
+        })
+    })
 }
 
 //delete user
-function deleteUser(userId) {
-    console.log('Deleting user `' + userId + '`');
+function deleteUser(user) {
+    let id = $('.proNamePic').data('id');
+    console.log('Deleting user `' + id + '`');
     $.ajax({
-        url: USERS_URL + '/' + userId,
+        url: USERS_URL + '/' + id,
         method: 'DELETE',
-        success: success //fix this
+        data: JSON.stringify(user),
+        success: () => location.href = location.href
     });
+}
+
+function getUserCard(user) {
+    //let id = $(this).data('id');
+    $.ajax({
+        url: USERS_URL + '/' + user,
+        method: 'GET',
+        data: JSON.stringify(user),
+        success: function (data) {
+            $('.modalContent').html(userTemplate(data));
+            $('.modal').show();
+            modal.initialize();
+        }
+    })
 }
 
 
 //add post
 function addNewPost(post) {
-    console.log('Adding new post: ' + post.title);
+    console.log('Adding new post: ' + post.title); 
     $.ajax({
         method: 'POST',
         url: POSTS_URL,
         data: JSON.stringify(post),
-        success: function (data) {
-            $('.containerHead').css('display', 'flex');
-            $('.hubContainer').hide();
-            getAndDisplayPosts(data);
+        success: function (post) {
+            $('.modal').hide();
+            $('.proPosts').prepend(`<div class="proPostBox" data-id="${post.id}">` +
+                `<div class="userPostBox"><p class="proUsernameTwo">` + post.user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+                '<div class="contentBox"><h3 class="proPostTitle">' + post.title + '</h3>' +
+                '<p class="proPostContent">' + post.content + '</p>' +
+                '<p class="proDate">' + post.date + '</p><button class="editPost" id="editPost">Edit</button><button class="deletePost">Delete</button></div>' +
+            `</div>`);
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -125,27 +212,45 @@ function addNewPost(post) {
 }
 
 //delete post
-function deletePost(postId) {
-    console.log('Deleting post `' + postId + '`');
+function deletePost(data) {
+    console.log('Deleting post `' + data + '`');
     $.ajax({
-        url: POSTS_URL + '/' + postId,
+        url: POSTS_URL + '/' + data,
         method: 'DELETE',
         success: function () {
-            console.log('Successfully deleted post');
+            $('.proPosts').closest(`.proPostBox[data-id="${data}"]`).hide();
         }
     });
 }
 
-//update post
-function updatePost(post) {
-    console.log('Updating post `' + post.id + '`');
+//get post for update
+function getPostEdit(post) {///////////////////2
+    //let id = $('#editPost').data('id');
+    console.log('Updating post `' + post + '`');
     $.ajax({
-        url: POSTS_URL + '/' + post.id,
-        method: 'PUT',
-        data: post,
-        success: success
+        url: POSTS_URL + '/' + post,
+        method: 'GET',
+        data: JSON.stringify(post),
+        success: function (data) {
+            $('.modalContent').html(postEditTemplate(data));
+        }
     });
 }
+
+function getPostDelete(post) {
+    //let id = $('#editPost').data('id');
+    console.log('Delete post `' + post + '`');
+    $.ajax({
+        url: POSTS_URL + '/' + post,
+        method: 'GET',
+        data: JSON.stringify(post),
+        success: function (data) {
+            $('.modalContent').html(deletePostTemplate(data));
+        }
+    });
+}
+
+
 
 
 function handleNewUser() {
@@ -165,25 +270,34 @@ function handleNewUser() {
     });
 }
 
-function handleLoginInfo() {
-    $('#logIn').on('submit', function (e) {
+function today() {
+    let today = new Date();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let year = today.getFullYear();
+    if (day < 10) {
+        day = '0' + day
+    } if (month < 10) {
+        month = '0' + month
+    }
+    today = year + '-' + month + '-' + day;
+    return today;
+}
+
+
+function handleNewPost(user) {
+    $('.modal').on('click', '#postBtn', function (e) {
         e.preventDefault();
-        loginUser({
-            username: $('#logIn').find('.username').val(),
-            password: $('#logIn').find('.password').val()
+        addNewPost({
+            user_id: $('#profileContainer').find('.proNamePic').data('id'),
+            title: $('.newPostForm').find('.newPostTitle').val(),
+            content: $('.newPostForm').find('.newPostContent').val(),
+            date: today(),
+            user: user
         })
     })
 }
 
-function handleNewPost() {
-    $('.modal').on('click', '#postBtn', function (e) {
-        e.preventDefault();
-        addNewPost({
-            title: $('.newPostForm').find('.newPostTitle').val(),
-            content: $('.newPostForm').find('.newPostContent').val()
-        })
-    })
-}
 
 $(function () {
     handleNewUser();

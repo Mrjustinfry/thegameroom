@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { People } = require('./models');
+const { Posts } = require('../models');
 
 const router = express.Router();
 
@@ -207,11 +208,35 @@ router.put('/:id', (req, res) => {
 
 //DELETE request for users
 router.delete('/:id', (req, res) => {
-    People.findOneAndRemove(req.params.id)
+    Posts.
+        remove({ user: req.params.id })
         .then(() => {
-            console.log(`Deleted user ${req.params.id}`);
-            res.status(204).end();
+            People.findByIdAndRemove(req.params.id)
+                .then(() => {
+                    console.log(`Deleted user ${req.params.id}`);
+                    res.status(204).end();
+                });
         });
 });
+
+
+
+/*
+app.delete('/authors/:id', (req, res) => {
+    BlogPost
+        .remove({ author: req.params.id })
+        .then(() => {
+            Author
+                .findByIdAndRemove(req.params.id)
+                .then(() => {
+                    console.log(`Deleted blog posts owned by and author with id \`${req.params.id}\``);
+                    res.status(204).json({ message: 'success' });
+                });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'something went terribly wrong' });
+        });
+});*/
 
 module.exports = { router };
