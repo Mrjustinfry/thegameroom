@@ -86,8 +86,8 @@ function signupTemplate() {
                     <label><div class="sInput">Last Name<span class="red">*</span> </div><input type="text" min="3" class="lastName suIn" required /></label>
                     <label><div class="sInput">Email<span class="red">*</span> </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
                     <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input type="text" min="3" maxlength="15"  class="username suIn" required /></label>
-                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" class="password suIn" min="10" required /></label>
-                    <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><input type="password" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
+                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" id="pword" class="password suIn" min="10" required /></label>
+                    <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><span id="wrong"></span><input type="password" id="pwordTwo" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
                     <label><div class="sInput">Xbox Gamertag: </div><input type="text" class="xbox suIn" /></label>

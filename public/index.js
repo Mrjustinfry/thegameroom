@@ -18,6 +18,7 @@ function signUp() {
     $('#suBtn').on('click', function(e) {
         e.preventDefault();
         $('.modalContent').html(signupTemplate);
+        validatePass();
         $('.modal').toggle();
         modal.initialize();
     })
@@ -25,15 +26,15 @@ function signUp() {
 
 
 function validatePass() {
-    $(".modal").on('focus', 'passwordTwo', function () {
-        var password = $(".password").val();
-        var confirmPassword = $(".passwordTwo").val();
-        if (password != confirmPassword) {
-            alert("Passwords do not match.");
-            return false;
+    $('.modal').find('#pwordTwo').keyup(function () {
+        if ($('#pword').val() === $('#pwordTwo').val()) {
+            $('#pword').css({ color: 'lightgreen' })
+            $('#pwordTwo').css({ color: 'lightgreen' })
+        } else {
+            $('#pword').css({ color: 'red' })
+            $('#pwordTwo').css({ color: 'red' })
         }
-        return true;
-    });
+    })
 };
 
 function newPostRender() {
