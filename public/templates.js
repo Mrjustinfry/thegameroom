@@ -81,12 +81,13 @@ function signupTemplate() {
                 <fieldset>
                     <span class="close">&times;</span>
                     <h4 class="signUpHead">Sign Up!</h4>
-                    <label><div class="sInput">First Name: </div><input type="text" min="3" class="firstName suIn" required /></label>
-                    <label><div class="sInput">Last Name: </div><input type="text" min="3" class="lastName suIn" required /></label>
-                    <label><div class="sInput">Email: </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
-                    <label><div class="sInput">Choose a Username: </div><input type="text" min="3" maxlength="15" class="username suIn" required /></label>
-                    <label><div class="sInput">Password: </div><input type="password" class="password suIn" min="10" required /></label>
-                    <label><div class="sInput">Re-enter Password: </div><input type="password" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
+                    <p class="red">(Username and password are case-sensitive)</p>
+                    <label><div class="sInput">First Name<span class="red">*</span> </div><input type="text" min="3" class="firstName suIn" required /></label>
+                    <label><div class="sInput">Last Name<span class="red">*</span> </div><input type="text" min="3" class="lastName suIn" required /></label>
+                    <label><div class="sInput">Email<span class="red">*</span> </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
+                    <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input type="text" min="3" maxlength="15"  class="username suIn" required /></label>
+                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" class="password suIn" min="10" required /></label>
+                    <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><input type="password" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
                     <label><div class="sInput">Xbox Gamertag: </div><input type="text" class="xbox suIn" /></label>
@@ -103,6 +104,7 @@ function signupTemplate() {
                     <button type="submit" class="logInBtn" id="signupuser">Submit</button>
                 </fieldset> 
             </form>
+        <p class="red">* required</p>
         </div>`
 };
 

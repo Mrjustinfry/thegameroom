@@ -1,11 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\auth",
-    "\\people",
     "\\public",
     "\\test"
   ],
-  "SelectedNode": "\\public\\arcades.jpg",
+  "SelectedNode": "\\public\\index.html",
   "PreviewInSolutionExplorer": false
 }

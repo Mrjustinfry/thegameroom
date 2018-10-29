@@ -54,6 +54,13 @@ img {
     z-index: 4;
 }
 
+.red {
+    font-size: small;
+    color: hotpink;
+    text-align: center;
+    vertical-align: super;
+}
+
 main {
     position: relative;
     display: flex;
