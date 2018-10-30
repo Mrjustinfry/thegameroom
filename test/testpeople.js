@@ -40,8 +40,6 @@ describe('/api/user', function () {
         return closeServer();
     });
 
-    beforeEach(function () { });
-
     afterEach(function () {
         return People.remove({});
     });
@@ -224,25 +222,6 @@ describe('/api/user', function () {
                             'Must be at least 1 characters long'
                         );
                         expect(res.body.location).to.equal('username');
-                    })
-            });
-            it('Should reject users with password less than ten characters', function () {
-                return chai
-                    .request(app)
-                    .post('/api/users')
-                    .send({
-                        username,
-                        password: '123456789',
-                        firstName,
-                        lastName
-                    })
-                    .then(res => {
-                        expect(res).to.have.status(422);
-                        expect(res.body.reason).to.equal('ValidationError');
-                        expect(res.body.message).to.equal(
-                            'Must be at least 10 characters long'
-                        );
-                        expect(res.body.location).to.equal('password');
                     })
             });
             it('Should reject users with password greater than 72 characters', function () {
@@ -447,7 +426,7 @@ describe('/api/user', function () {
                 const theUser = {
                     firstName: "john",
                     lastName: "doe",
-                    username: "DanceOnAir",
+                    username: "Jdoe",
                     password: "johndoe",
                     email: "example@example.com",
                     nintendo: "SW-1234-5678-9091",
@@ -499,12 +478,24 @@ describe('/api/user', function () {
 
         describe('Delete requests for users', function () {
             it('Should delete user data by id', function () {
-                let user;
+
+                let user = {
+                    firstName: "john",
+                    lastName: "doe",
+                    username: "Jdoe",
+                    password: "johndoe",
+                    email: "example@example.com",
+                    nintendo: "SW-1234-5678-9091",
+                    playstation: "johnny",
+                    xbox: "john",
+                    platform: "nintendo"
+                };
+                return People.create(user);
 
                 return People
                     .findOne()
                     .then(_user => {
-                        user = _user;
+                        userser = _user;
                         return chai.request(app).delete(`/api/users/${user._id}`);
                     })
                     .then(res => {
