@@ -21,7 +21,6 @@ body {
 
 .container {
     display: flex;
-    border: 1px solid red;
     padding: 3%;
     margin: 3%;
 }
@@ -62,7 +61,7 @@ img {
 }
 
 main {
-    position: relative;
+   // position: relative;
     display: flex;
     flex-flow: row wrap;
     padding-top: 4em;
@@ -90,9 +89,6 @@ main {
     order: unset;
 }
 
-#noposts {
-    text-align: center;
-}
 
 .userPostBox {
     flex-flow: row-reverse;
@@ -160,16 +156,6 @@ main {
 
 .logoBox {
     flex: 1;
-}
-
-.nav {
-    flex: 1;
-    border: 1px solid orange;
-}
-
-li {
-    list-style: none;
-    display: inline;
 }
 
 .title {
@@ -243,9 +229,6 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    //background-image: url(gamecontroller2.png);
-    //background-repeat: no-repeat;
-    //background-position: top left;
 }
 
 .gamers {
@@ -264,7 +247,6 @@ li {
     background-repeat: no-repeat;
     background-position: bottom right;
     height: 37em;
-    display: flex;
     flex-flow: column;
 }
 
@@ -297,15 +279,6 @@ li {
     text-align: center;
 }
 
-#controller {
-    height: 100px;
-    width: 100px;
-    margin: 0 auto;
-    text-align: center;
-    flex: 1;
-}
-
-
 .logInBtn, #postBtn {
     background-color: hotpink;
     float: right;
@@ -333,14 +306,11 @@ li {
 }
 
 .commentIn {
-   // border: none;
     background-color: rgba(10, 10, 10, .7);
     color: aqua;
     font-family: 'Roboto Mono', monospace;
-   // flex-grow: 2;
     border: 1px solid hotpink;
     border-top: 1px solid hotpink;
-   // min-width: 14em;
     border-radius: 5px 0px 0px 5px;
     flex: 1;
 }
@@ -443,16 +413,6 @@ label {
     flex: 3;
 }
 
-/*
-input {
-    background-color: white;
-    color: black;
-    flex: 1;
-    flex-basis: 50%;
-    justify-content: flex-end;
-    margin: auto;
-}
-*/
 .modalContent {
     margin-top: 10em;
     flex: 1;
@@ -473,59 +433,6 @@ input {
         text-decoration: none;
         cursor: pointer;
     }
-
-
-.hubContainer {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    display: flex;
-    padding: 1%;
-}
-
-.theHub {
-    display: flex;
-    flex: 1;
-    justify-content: space-around;
-    flex-flow: row wrap;
-    border: 5px solid hotpink;
-}
-
-.section {
-    flex: 1;
-    flex-basis: 50%;
-    padding: 5%;
-}
-
-.btns {
-    height: 100%;
-    width: 100%;
-    color: white;
-    background-color: transparent;
-    border: none;
-    font-family: 'Press Start 2P', cursive;
-    margin: auto 0;
-    text-shadow: 0px 3px 4px black;
-}
-
-.profileBtn {
-    background-image: linear-gradient(to top, hotpink, black);
-}
-
-.gameBtn {
-    background-image: linear-gradient(to top, lightgreen, black);
-}
-
-.postBtn {
-    background-image: linear-gradient(to bottom, aqua, black);
-}
-
-.allBtn {
-    background-image: linear-gradient(to bottom, yellow, black);
-}
 
 .userBox {
     display: flex;
@@ -610,6 +517,8 @@ input {
     border: 2px solid lightgreen;
     border-radius: 5px;
     box-shadow: 2px 2px lightgreen;
+    -moz-box-shadow: 2px 2px lightgreen;
+    -webkit-box-shadow: 2px 2px lightgreen;
     text-align: center;
     padding: .5em;
     background-color: hotpink;
@@ -619,6 +528,8 @@ input {
         cursor: pointer;
         border: 2px solid hotpink;
         box-shadow: 2px 2px hotpink;
+        -moz-box-shadow: 2px 2px hotpink;
+        -webkit-box-shadow: 2px 2px hotpink;
         background-color: lightgreen;
     }
 
@@ -648,14 +559,18 @@ input {
     color: black;
     font-family: inherit;
     box-shadow: 3px 3px hotpink;
+    -moz-box-shadow: 3px 3px hotpink;
+    -webkit-box-shadow: 3px 3px hotpink;
     padding: 1em;
     margin: 1em;
 }
 
-.proPostBtn:hover {
-    background-color: hotpink;
-    box-shadow: 3px 3px aqua;
-}
+    .proPostBtn:hover {
+        background-color: hotpink;
+        box-shadow: 3px 3px aqua;
+        -moz-box-shadow: 3px 3px aqua;
+        -webkit-box-shadow: 3px 3px aqua;
+    }
 
 .editProfile, .editPost {
     border: none;
@@ -663,6 +578,8 @@ input {
     color: black;
     font-family: inherit;
     box-shadow: 3px 3px aqua;
+    -moz-box-shadow: 3px 3px aqua;
+    -webkit-box-shadow: 3px 3px aqua;
     padding: 1em;
     margin: 1em;
 }
@@ -682,8 +599,10 @@ input {
 }
 
 .editProfile:hover, .editPost:hover {
-        background-color: aqua;
-        box-shadow: 3px 3px hotpink;
+    background-color: aqua;
+    box-shadow: 3px 3px hotpink;
+    -moz-box-shadow: 3px 3px hotpink;
+    -webkit-box-shadow: 3px 3px hotpink;
 }
 
 .deleteProfile, .deletePost {
@@ -692,16 +611,20 @@ input {
     color: yellow;
     font-family: inherit;
     box-shadow: 3px 3px yellow;
+    -moz-box-shadow: 3px 3px yellow;
+    -webkit-box-shadow: 3px 3px yellow;
     padding: 1em;
     margin: 1em;
     float: right;
 }
 
-.deleteProfile:hover, .deletePost:hover {
-    background-color: yellow;
-    box-shadow: 3px 3px hotpink;
-    color: black;
-}
+    .deleteProfile:hover, .deletePost:hover {
+        background-color: yellow;
+        box-shadow: 3px 3px hotpink;
+        -moz-box-shadow: 3px 3px hotpink;
+        -webkit-box-shadow: 3px 3px hotpink;
+        color: black;
+    }
 
 button:hover {
     cursor: pointer;
@@ -726,8 +649,8 @@ button:hover {
 }
 
 .proUserPic {
-        height: 100px;
-        width: 100px;
+    height: 100px;
+    width: 100px;
 }
 
 .proPostTitle {
@@ -805,6 +728,8 @@ button:hover {
 
 header button:hover {
     box-shadow: 0px 4px white;
+    -moz-box-shadow: 0px 4px white;
+    -webkit-box-shadow: 0px 4px white;
 }
 
 .yesNo {
@@ -819,6 +744,8 @@ header button:hover {
     background-color: black;
     color: yellow;
     box-shadow: 3px 3px yellow;
+    -moz-box-shadow: 3px 3px yellow;
+    -webkit-box-shadow: 3px 3px yellow;
     font-family: 'Roboto Mono', monospace;
     flex-basis: 13em;
     flex: 1;
@@ -830,6 +757,8 @@ header button:hover {
         background-color: yellow;
         color: black;
         box-shadow: 3px 3px lightgreen;
+        -moz-box-shadow: 3px 3px lightgreen;
+        -webkit-box-shadow: 3px 3px lightgreen;
     }
 
 #cancel {
@@ -839,6 +768,8 @@ header button:hover {
     background-color: hotpink;
     color: black;
     box-shadow: 3px 3px cyan;
+    -moz-box-shadow: 3px 3px cyan;
+    -webkit-box-shadow: 3px 3px cyan;
     flex: 1;
 }
 
@@ -846,6 +777,8 @@ header button:hover {
         color: black;
         background-color: aqua;
         box-shadow: 3px 3px hotpink;
+        -moz-box-shadow: 3px 3px hotpink;
+        -webkit-box-shadow: 3px 3px hotpink;
     }
 
 

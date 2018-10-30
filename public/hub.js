@@ -49,11 +49,6 @@ function addUser(user) {
         success: function () {
             $('.modalContent').html(thankYou);
             modal.initialize();
-            /*
-            $('.close').on('click', function (e) {
-                e.preventDefault();
-                $('.modal').toggle();
-            })*/
         },
         error: function () {
             alert('It seems like something is missing. Make sure everything is filled in correctly and try again.');
@@ -88,6 +83,25 @@ function handleLoginInfo() {
 }
 
 
+
+function exit() {
+    $('.eBtn').on('click', function () {
+        let user = $('.proNamePic').data('id');
+        refreshUser(user);
+    })
+}
+
+function refreshUser(user) {
+    $.ajax({
+        method: 'POST',
+        url: 'api/auth/refresh',
+        data: JSON.stringify(user),
+        contentType: 'application/json',
+        success: location.href = location.href
+    })
+}
+
+
 function handleProfile(data) {
     $('#landing').hide();
     $('.containerHead').css('display', 'flex');
@@ -101,7 +115,7 @@ function handleProfile(data) {
         for (let i = 0; i < data.length; i++) {
             if (data[i].user == theUser) {
                 $('.proPosts').prepend(`<div class="proPostBox" data-id="${data[i].id}">` +
-                    `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+                   // `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
                     '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
                     '<p class="proPostContent">' + data[i].content + '</p>' +
                     '<p class="proDate">' + data[i].date + `</p><button class="editPost" id="editPost" data-id="${data[i].id}">Edit</button><button data-id="${data[i].id}" class="deletePost">Delete</button></div>` +
@@ -152,9 +166,10 @@ function updatePost(post) {
             for (let i = 0; i < data.length; i++) {
                 if (user.username === data[i].user) {
                     $('.proPosts').prepend(`<div class="proPostBox" data-id="${data[i].id}">` +
-                        `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+                        //`<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
                         '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
                         '<p class="proPostContent">' + data[i].content + '</p>' +
+                        '<p claass="comments">' + data[i].comments + '</p>' +
                         '<p class="proDate">' + data[i].date + `</p><button class="editPost" id="editPost" data-id="${data[i].id}">Edit</button><button data-id="${data[i].id}" class="deletePost">Delete</button></div>` +
                         '</div>');
                 } 
@@ -200,7 +215,7 @@ function addNewPost(post) {
         success: function (post) {
             $('.modal').hide();
             $('.proPosts').prepend(`<div class="proPostBox" data-id="${post.id}">` +
-                `<div class="userPostBox"><p class="proUsernameTwo">` + post.user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
+               // `<div class="userPostBox"><p class="proUsernameTwo">` + post.user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
                 '<div class="contentBox"><h3 class="proPostTitle">' + post.title + '</h3>' +
                 '<p class="proPostContent">' + post.content + '</p>' +
                 '<p class="proDate">' + post.date + '</p><button class="editPost" id="editPost">Edit</button><button class="deletePost">Delete</button></div>' +
@@ -303,4 +318,5 @@ $(function () {
     handleNewUser();
     handleNewPost();
     handleLoginInfo();
+    exit();
 });

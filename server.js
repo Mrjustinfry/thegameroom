@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(express.json());
 
-const { DATABASE_URL, PORT } = require('./config');
+const { TEST_DATABASE_URL, PORT } = require('./config');
 
 
 const postRouter = require('./postRouter');
@@ -77,7 +77,8 @@ function closeServer() {
 }
 
 if (require.main === module) {
-    runServer(DATABASE_URL).catch(err => console.error(err));
+    runServer(TEST_DATABASE_URL).catch(err => console.error(err));
+    console.log(TEST_DATABASE_URL);
 }
 
 module.exports = { app, runServer, closeServer };

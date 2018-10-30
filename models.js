@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 
 const { People } = require('./people/models');
 
-const commentSchema = mongoose.Schema({ content: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'people' } });
+const commentSchema = mongoose.Schema({ comment: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'people' } });
 
 const today = () => {
     let today = new Date();

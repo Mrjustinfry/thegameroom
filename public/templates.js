@@ -20,7 +20,7 @@ function displayPosts(data) {
             '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
             '<div class="commentBox"><p class="comments">' + data[i].comments + '</p >' +
-           // `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" data-id="${data[i].id}">comment</button></div>` +
+           // `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" aria="button" data-id="${data[i].id}">comment</button></div>` +
                 '</div>');
     }
 };
@@ -36,7 +36,7 @@ function gameSearchTemplate() {
                                 <p class="esrb">ESRB: <span class="esrbInfo">${esrb}</span></p>
                                 <p class="rating">Rating: <span class="ratingInfo">${rating}</span></p>
                             </div>
-                            <button type="submit" class="gameSearchBtn">Search</button>
+                            <button type="submit" class="gameSearchBtn" aria="button">Search</button>
                         </form>`
 }
 
@@ -47,7 +47,7 @@ function newPostTemplate() {
                 <fieldset>
                     <label><div class="sInput tInput">Title: </div><input type="text" class="newPostTitle suIn" /></label>
                     <label><div class="sInput pInput">Tell me about it: </div><textarea class="newPostContent suIn"></textarea></label>
-                    <button type="submit" id="postBtn">Post</button>
+                    <button type="submit" id="postBtn" aria="button">Post</button>
                 </fieldset>
             </form>
         </div>`
@@ -69,8 +69,8 @@ function landingTemplate() {
 
                     <label>Username: <input type="text" class="usrLogin username" /></label>
                     <label>Password: <input type="password" class="usrLogin password" /></label>
-                    <button class="logInBtn" type="submit">Login</button>
-                    <p>Not a member? </p><button id="suBtn" class="logInBtn">Sign up now!</button>
+                    <button class="logInBtn" type="submit" aria="button">Login</button>
+                    <p>Not a member? </p><button id="suBtn" class="logInBtn" aria="button">Sign up now!</button>
                 </fieldset>
             </form>
                 </div>
@@ -87,9 +87,9 @@ function signupTemplate() {
                     <label><div class="sInput">First Name<span class="red">*</span> </div><input type="text" min="3" class="firstName suIn" required /></label>
                     <label><div class="sInput">Last Name<span class="red">*</span> </div><input type="text" min="3" class="lastName suIn" required /></label>
                     <label><div class="sInput">Email<span class="red">*</span> </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
-                    <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input placeholder="(Must be between 3 and 15 characters)" type="text" min="3" maxlength="15"  class="username suIn" required /></label>
-                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" id="pword" class="password suIn" min="3" required /></label>
-                    <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><span id="wrong"></span><input type="password" id="pwordTwo" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
+                    <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input placeholder="3-15 characters" type="text" min="3" maxlength="15"  class="username suIn" required /></label>
+                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" id="pword" class="password suIn" min="3" maxlength="72" required /></label>
+                    <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><span id="wrong"></span><input type="password" id="pwordTwo" min="3" maxlength="72" class="passwordTwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
                     <label><div class="sInput">Xbox Gamertag: </div><input type="text" class="xbox suIn" /></label>
@@ -103,24 +103,13 @@ function signupTemplate() {
                             <option value="PC">PC</option>
                         </select>
                     </label>
-                    <button type="submit" class="logInBtn" id="signupuser">Submit</button>
+                    <button type="submit" class="logInBtn" id="signupuser" aria="button">Submit</button>
                 </fieldset> 
             </form>
         <p class="red">* required</p>
         </div>`
 };
 
-function headerTemplate() {
-    return `<div class="toggle">
-        <header class="containerHead">
-            <button class="hBtn">Hub</button>
-            <button class="gBtn">Gamers</button>
-            <button class="mBtn"><img src="gamecontroller.png" alt="game controller" class="controller" /></button>
-            <button class="pBtn">Post</button>
-            <button class="eBtn">Exit</button>
-        </header>
-    </div>`
-};
 
 function userTemplate(data) {
     return `<div class="container userBox userCard" data-id="${data.id}"><span class="close" id="suClose">&times;</span>` +
@@ -144,17 +133,16 @@ function thankYou() {
 function youSureTemplate() {
     return `<div class="tyBox">
                 <h1 class="ty">Are you sure you want to delete your profile?</br>This cannot be undone.</h1>
-                <div class="yesNo"><button class="deleteProfile" id="del">DELETE</button><button class="editProfile close" id="cancel">CANCEL</button></div>
+                <div class="yesNo"><button class="deleteProfile" id="del" aria="button">DELETE</button><button class="editProfile close" id="cancel" aria="button">CANCEL</button></div>
             </div>`
 }
 
 function deletePostTemplate(data) {
     return `<div class="tyBox">
                 <h1 class="ty">Are you sure you want to delete this post?</h1>
-                <div class="yesNo"><button class="deleteProfile" id="delPost" data-id="${data.id}">DELETE</button><button class="editProfile close" id="cancel">CANCEL</button></div>
+                <div class="yesNo"><button class="deleteProfile" id="delPost" data-id="${data.id}" aria="button">DELETE</button><button class="editProfile close" id="cancel" aria="button">CANCEL</button></div>
             </div>`
 }
-
 
 function profileTemplate(user) {
     return `<div class="proHead">
@@ -166,9 +154,9 @@ function profileTemplate(user) {
                         <p class="m">Switch Friend Code: </br><span class="green">` + user.nintendo + `</span></p>
                         <p class="m">PS4 Gamertag: </br><span class="green">` + user.playstation + `</span></p>
                         <p class="m">Xbox Gamertag: </br><span class="green">` + user.xbox + `</span></p>
-                        <button class="editProfile">Edit your profile</button>
-                        <button class="deleteProfile">Delete your profile</button>
-                    <button class="proPostBtn">Write a new Post</button>
+                        <button class="editProfile" aria="button">Edit your profile</button>
+                        <button class="deleteProfile" aria="button">Delete your profile</button>
+                    <button class="proPostBtn" aria="button">Write a new Post</button>
                     </div>
             </div>
             <div class="proInfo">
@@ -184,30 +172,10 @@ function profileTemplate(user) {
 function proUsernamesTemplate(data) {
     for (let i = 0; i < data.length; i++) {
         $('.proUsers').append(`<div class="proUserBox">` +
-            `<h3 class="listUsername" data-id="${data[i].id}">` + data[i].username + `</h3>` +
+            `<h3 class="listUsername" aria="button" data-id="${data[i].id}">` + data[i].username + `</h3>` +
             `</div>`);
     }
 }
-
-
-/*
-function proPosts(data) {
-    let theUser = data.user.username;
-    for (let i = 0; i < data.length; i++) {
-        if (data.title.length < 1) {
-            $('.proPosts').html(`<p id="noposts">Click "Write a new post" to start sharing!</p> `);
-        }
-        else if (data[i].user == theUser) {
-            $('.proPosts').prepend(`<div class="proPostBox" data-id="${data[i].id}">` +
-                `<div class="userPostBox"><p class="proUsernameTwo">` + data[i].user + `</p><img src="profile.jpg" alt="profile image" class="ProUserPic" /></div>` +
-                '<div class="contentBox"><h3 class="proPostTitle">' + data[i].title + '</h3>' +
-                '<p class="proPostContent">' + data[i].content + '</p>' +
-                '<p class="proDate">' + data[i].date + `</p><button class="editPost" id="editPost" data-id="${data[i].id}">Edit</button><button data-id="${data[i].id}" class="deletePost">Delete</button></div>` +
-                '</div>');
-        } 
-    }
-}*/
-
 
 function editProfileTemplate(data) {
     return `<div class="editProfileBox">
@@ -229,7 +197,7 @@ function editProfileTemplate(data) {
                             <option value="PC">PC</option>
                         </select>
                     </label>
-                    <button type="submit" class="logInBtn" id="editProfileBtn">Submit</button>
+                    <button type="submit" class="logInBtn" id="editProfileBtn" aria="button">Submit</button>
                 </fieldset> 
             </form>
             </div>`
@@ -242,7 +210,7 @@ function postEditTemplate(data) {
             <fieldset>
                 <label><span class="sInput tInput">Title: </span><input type="text" value="${data.title}" class="newPostTitle suIn" id="editTitle" /></label>
                 <label><span class="sInput pInput">Tell me about it: </span><textarea class="newPostContent suIn" id="editContent">${data.content}</textarea></label>
-                <button type="submit" id="editPostBtn" data-id=${data.id}>Post</button>
+                <button type="submit" id="editPostBtn" aria="button" data-id=${data.id}>Post</button>
             </fieldset>
             </form >
         </div >`

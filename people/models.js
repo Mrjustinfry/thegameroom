@@ -26,17 +26,6 @@ const peopleSchema = mongoose.Schema({
     platform: String,
 });
 
-/*
-peopleSchema.pre('find', function (next) {
-    this.populate('user');
-    next();
-});
-
-peopleSchema.pre('findOne', function (next) {
-    this.populate('user');
-    next();
-});
-*/
 
 peopleSchema.methods.serialize = function () {
     return {

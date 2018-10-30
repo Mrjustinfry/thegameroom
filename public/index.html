@@ -10,13 +10,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-        <header class="containerHead">
-            <button class="hBtn">Profile</button>
-            <button class="gBtn">Gamers</button>
-            <button class="pBtn">Posts</button>
-            <button class="eBtn">Exit</button>
+        <header class="containerHead" aria-live="assertive">
+            <button class="hBtn" aria="button">Profile</button>
+            <button class="gBtn" aria="button">Gamers</button>
+            <button class="pBtn" aria="button">Posts</button>
+            <button class="eBtn" aria="button">Exit</button>
         </header>
-    <div class="modal" hidden>
+    <div class="modal" aria-live="assertive" hidden>
         <div class="modalContent">
             <span class="close">&times;</span>
         </div>
@@ -36,16 +36,16 @@
                         <h2>Log in:</h2>
                         <label>Username: <input type="text" class="usrLogin username" /></label>
                         <label>Password: <input type="password" class="usrLogin password" /></label>
-                        <button class="logInBtn" type="submit">Login</button>
+                        <button class="logInBtn" type="submit" aria="button">Login</button>
                     </fieldset>
                 </form>
                 <div class="memberBox">
-                <p class="member">Not a member? </p><button id="suBtn" class="logInBtn s">Sign up now!</button>
+                <p class="member">Not a member? </p><button id="suBtn" class="logInBtn s" aria="button">Sign up now!</button>
                     </div>
             </div>
         </div>
-        <div id="profileContainer"></div>
-        <div class="mainContainer">
+        <div id="profileContainer" aria-live="polite"></div>
+        <div class="mainContainer" aria-live="polite">
 
 
 

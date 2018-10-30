@@ -1,6 +1,6 @@
  
 'use strict';
-//global.TEST_DATABASE_URL = 'mongodb://justinfry:thinkful101@ds115753.mlab.com:15753/blog-test';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
@@ -50,17 +50,8 @@ describe('Protected endpoint', function () {
                 .request(app)
                 .get('/api/protected')
                 .then(res => {
-                    //expect.fail(null, null, 'Request should not succeed')
                     expect(res).to.have.status(401);
-                })/*
-                .catch(err => {
-                    if (err instanceof chai.AssertionError) {
-                        throw err;
-                    }
-
-                    const res = err.response;
-                    expect(res).to.have.status(401);
-                });*/
+                })
         });
 
         it('Should reject requests with an invalid token', function () {
@@ -82,17 +73,8 @@ describe('Protected endpoint', function () {
                 .get('/api/protected')
                 .set('Authorization', `Bearer ${token}`)
                 .then(res => {
-                    //expect.fail(null, null, 'Request should not succeed')
                     expect(res).to.have.status(401);
-                })/*
-                .catch(err => {
-                    if (err instanceof chai.AssertionError) {
-                        throw err;
-                    }
-
-                    const res = err.response;
-                    expect(res).to.have.status(401);
-                });*/
+                })
         });
         it('Should reject requests with an expired token', function () {
             const token = jwt.sign(
@@ -116,17 +98,8 @@ describe('Protected endpoint', function () {
                 .get('/api/protected')
                 .set('authorization', `Bearer ${token}`)
                 .then(res => {
-                    //expect.fail(null, null, 'Request should not succeed')
                     expect(res).to.have.status(401);
-                })/*
-                .catch(err => {
-                    if (err instanceof chai.AssertionError) {
-                        throw err;
-                    }
-
-                    const res = err.response;
-                    expect(res).to.have.status(401);
-                });*/
+                })
         });
         it('Should send protected data', function () {
             const token = jwt.sign(

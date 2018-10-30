@@ -57,7 +57,7 @@ router.post('/', jsonParser, (req, res) => {
             min: 1
         },
         password: {
-            min: 10,
+            min: 3,
             max: 72
         }
     };
@@ -129,36 +129,13 @@ router.post('/', jsonParser, (req, res) => {
         });
 });
 
-
+// Get request for users
 router.get('/', (req, res) => {
     return People.find()
         .then(users => res.json(users.map(user => user.serialize())))
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
-/*
-//GET request for users
-router.get('/', (req, res) => {
-    People.find()
-        .then(users => {
-            res.json(users.map(user => {
-                return {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username,
-                    email: user.email,
-                    nintendo: user.nintendo,
-                    playstation: user.playstation,
-                    xbox: user.xbox,
-                    platform: user.platform
-                }
-            }))/*
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({ error: "Internal Server Error" });
-                });
-        });
-});*/
+
 
 //GET request user by id
 router.get('/:id', (req, res) => {
@@ -218,25 +195,5 @@ router.delete('/:id', (req, res) => {
                 });
         });
 });
-
-
-
-/*
-app.delete('/authors/:id', (req, res) => {
-    BlogPost
-        .remove({ author: req.params.id })
-        .then(() => {
-            Author
-                .findByIdAndRemove(req.params.id)
-                .then(() => {
-                    console.log(`Deleted blog posts owned by and author with id \`${req.params.id}\``);
-                    res.status(204).json({ message: 'success' });
-                });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ error: 'something went terribly wrong' });
-        });
-});*/
 
 module.exports = { router };
