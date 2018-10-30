@@ -316,8 +316,33 @@ li {
     margin-right: 3%;
 }
 
-#postBtn:hover {
+#postBtn:hover, .commentBtn:hover {
     background-color: lightgreen;
+}
+
+.commentBox {
+    display: flex;
+
+}
+
+.commentBtn {
+    background-color: hotpink;
+    border: 1px solid hotpink;
+    border-radius: 0px 5px 5px 0px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.commentIn {
+   // border: none;
+    background-color: rgba(10, 10, 10, .7);
+    color: aqua;
+    font-family: 'Roboto Mono', monospace;
+   // flex-grow: 2;
+    border: 1px solid hotpink;
+    border-top: 1px solid hotpink;
+   // min-width: 14em;
+    border-radius: 5px 0px 0px 5px;
+    flex: 1;
 }
 
 .memberBox {
@@ -638,8 +663,8 @@ input {
     color: black;
     font-family: inherit;
     box-shadow: 3px 3px aqua;
-    padding: 1em;
-    margin: 1em;
+    //padding: 1em;
+    //margin: 1em;
 }
 
 .editPost {
@@ -667,8 +692,8 @@ input {
     color: yellow;
     font-family: inherit;
     box-shadow: 3px 3px yellow;
-    padding: 1em;
-    margin: 1em;
+   // padding: 1em;
+    //margin: 1em;
     float: right;
 }
 
@@ -830,13 +855,17 @@ header button:hover {
         font-size: large;
     }
 
+    .uName {
+        text-align: left;
+    }
+
     main {
         padding-top: 2em;
     }
 
     .proPic {
-        height: 100%;
-        width: 100%;
+        height: auto;
+        width: auto;
     }
 
     .proNamePic {
@@ -869,15 +898,15 @@ header button:hover {
     }
 
     .uPic {
-        height: 10em;
-        width: 10em;
+        height: auto;
+        width: auto;
     }
 
     .userPostBox {
         display: flex;
-        flex-direction: column-reverse;
+        //flex-direction: column-reverse;
         padding: 0.3em;
-        border-right: 2px solid hotpink;
+       // border-right: 2px solid hotpink;
     }
 
     .mainInfo {
@@ -885,7 +914,7 @@ header button:hover {
     }
 
     .postBox {
-        flex-flow: initial;
+       // flex-flow: initial;
     }
 
     .contentBox {
