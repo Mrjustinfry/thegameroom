@@ -20,8 +20,8 @@ function displayPosts(data) {
             '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
             '<div class="commentBox"><p class="comments">' + data[i].comments + '</p >' +
-            `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" data-id="${data[i].id}">comment</button>` +
-                '</div></div>');
+           // `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" data-id="${data[i].id}">comment</button></div>` +
+                '</div>');
     }
 };
 
