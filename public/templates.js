@@ -17,9 +17,11 @@ function displayPosts(data) {
         $('.mainContainer').prepend(`<div class="container postBox" data-id="${data[i].id}">` +
                 `<div class="userPostBox"><p class="uName">`+ data[i].user+`</p><img src="profile.jpg" alt="profile image" class="uPic" /></div>` +
                 '<div class="contentBox"><h3 class="title">' + data[i].title + '</h3>' +
-                '<p class="content">' + data[i].content + '</p><p class="comments">'+ data[i].comments +
+            '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
-                '</div>');
+            '<div class="commentBox"><p class="comments">' + data[i].comments + '</p >' +
+            `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" data-id="${data[i].id}">comment</button>` +
+                '</div></div>');
     }
 };
 
@@ -85,8 +87,8 @@ function signupTemplate() {
                     <label><div class="sInput">First Name<span class="red">*</span> </div><input type="text" min="3" class="firstName suIn" required /></label>
                     <label><div class="sInput">Last Name<span class="red">*</span> </div><input type="text" min="3" class="lastName suIn" required /></label>
                     <label><div class="sInput">Email<span class="red">*</span> </div><input type="email" placeholder="someone@something.com" class="email suIn" required /></label>
-                    <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input type="text" min="3" maxlength="15"  class="username suIn" required /></label>
-                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" id="pword" class="password suIn" min="10" required /></label>
+                    <label><div class="sInput">Choose a Username<span class="red">*</span> </div><input placeholder="(Must be between 3 and 15 characters)" type="text" min="3" maxlength="15"  class="username suIn" required /></label>
+                    <label><div class="sInput">Password<span class="red">*</span> </div><input type="password" id="pword" class="password suIn" min="3" required /></label>
                     <label><div class="sInput">Re-enter Password<span class="red">*</span> </div><span id="wrong"></span><input type="password" id="pwordTwo" min="5" maxlength="20" class="passwordTwo suIn" required /></label>
                     <label><div class="sInput">Switch friend code: </div><input type="text" class="nintendo suIn" placeholder="SW-1234-5678-9000" pattern="SW[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}" /></label>
                     <label><div class="sInput">PS4 Gamertag: </div><input type="text" class="playstation suIn" /></label>
@@ -153,26 +155,6 @@ function deletePostTemplate(data) {
             </div>`
 }
 
-/*
-function homeTemplate() {
-    return `<div class="hubContainer">
-            <div class="theHub">
-                <div class="section hub">
-                    <button class="profileBtn btns">Check out your Profile</button>
-                </div>
-                <div class="section gamers">
-                    <button class="gameBtn btns">Meet other Gamers</button>
-                </div>
-                <div class="section post">
-                    <button class="postBtn btns">Write a new Post</button>
-                </div>
-                <div class="section exit">
-                    <button class="allBtn btns">See what Everyone is talking about?</button>
-                </div>
-            </div>
-        </div>`
-}
-*/
 
 function profileTemplate(user) {
     return `<div class="proHead">
