@@ -72,14 +72,12 @@ function displayAllPosts() {
 };
 
 function getAndDisplayUsers() {
-    console.log('Retrieving users')
     $.getJSON(USERS_URL, function (users) {
         $('.mainContainer').html(displayUsers(users));
     });
 }
 
 function getAndDisplayPosts() {
-    console.log('Retrieving posts')
     $.getJSON(POSTS_URL, function (posts) {
         $('.mainContainer').html(displayPosts(posts));
     })

@@ -79,7 +79,6 @@ describe('The game room api (posts)', function () {
                 })
                 .then(count => {
                     res.body.should.have.lengthOf(count);
-                    console.log(count);
                 })
         })
 
@@ -117,14 +116,12 @@ describe('The game room api (posts)', function () {
                 password: 'Thinkful101'
             }
             return People.create(newUser);
-            console.log('newUser =', newUser)
             const newPost = {
                 user_id: newUser._id,
                 user: newUser.username,
                 title: 'hello',
                 content: 'world'              
             }
-            console.log('newPost =', newPost)
 
             return chai.request(app)
                 .post('/api/users')
