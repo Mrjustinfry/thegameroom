@@ -110,7 +110,7 @@ router.put('/:id', (req, res) => {
     }
 
     const updated = {};
-    const updateableInfo = ['title', 'content', 'comments'];
+    const updateableInfo = ['title', 'content'];
     updateableInfo.forEach(info => {
         if (info in req.body) {
             updated[info] = req.body[info];

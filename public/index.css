@@ -61,7 +61,6 @@ img {
 }
 
 main {
-   // position: relative;
     display: flex;
     flex-flow: row wrap;
     padding-top: 4em;
@@ -76,6 +75,11 @@ main {
     border: 1px solid white;
     border-radius: 1em;
     flex-flow: column;
+}
+
+#ucClose {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .userCard {
@@ -673,7 +677,6 @@ button:hover {
     border: 5px solid aqua;
     border-radius: 10px;
     background-color: black;
-    //margin-top: 10em;
     max-width: 36em;
     margin: 3em auto;
 }
@@ -692,7 +695,6 @@ button:hover {
 
 .newPostTitle {
     border: none;
-   // background-color: rgba(140, 247, 17, 0.33);
     color: whitesmoke;
     font-family: 'Roboto Mono', monospace;
     flex: 2;
@@ -703,7 +705,6 @@ button:hover {
     height: 10em;
     border-right: 1px solid lightgreen;
     flex: 2;
-   // background-color: rgba(140, 247, 17, 0.33);
     word-break: break-word;
     vertical-align: top;
 }
@@ -837,17 +838,11 @@ header button:hover {
 
     .userPostBox {
         display: flex;
-        //flex-direction: column-reverse;
         padding: 0.3em;
-       // border-right: 2px solid hotpink;
     }
 
     .mainInfo {
         font-size: 1.4em;
-    }
-
-    .postBox {
-       // flex-flow: initial;
     }
 
     .contentBox {

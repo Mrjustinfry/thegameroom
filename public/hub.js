@@ -4,22 +4,6 @@ var USERS_URL = '/api/users';
 var POSTS_URL = '/posts';
 
 
-/*
-//Get Users
-function getUsers(users) {
-    console.log('Getting users');
-    $.ajax({
-        method: 'GET',
-        url: 'api/users',
-        data: JSON.stringify(users),
-        success: function () {
-            console.log('gathered user data');
-        },
-        dataType: 'json',
-        contentType: 'application/json'
-    });
-};*/
-
 //get user by id
 function getUserEdit(user) {
     let id = $('.proNamePic').data('id');
@@ -56,6 +40,7 @@ function addUser(user) {
     });
 }
 
+//Post for user login
 function loginUser(user) {
     console.log(`Logging in ${user.username}`);
     $.ajax({
@@ -91,6 +76,7 @@ function exit() {
     })
 }
 
+//Post to refresh user token
 function refreshUser(user) {
     $.ajax({
         method: 'POST',
@@ -190,8 +176,8 @@ function deleteUser(user) {
     });
 }
 
+
 function getUserCard(user) {
-    //let id = $(this).data('id');
     $.ajax({
         url: USERS_URL + '/' + user,
         method: 'GET',
@@ -239,8 +225,7 @@ function deletePost(data) {
 }
 
 //get post for update
-function getPostEdit(post) {///////////////////2
-    //let id = $('#editPost').data('id');
+function getPostEdit(post) {
     console.log('Updating post `' + post + '`');
     $.ajax({
         url: POSTS_URL + '/' + post,
@@ -252,8 +237,8 @@ function getPostEdit(post) {///////////////////2
     });
 }
 
+//get request for deleting post
 function getPostDelete(post) {
-    //let id = $('#editPost').data('id');
     console.log('Delete post `' + post + '`');
     $.ajax({
         url: POSTS_URL + '/' + post,
@@ -264,8 +249,6 @@ function getPostDelete(post) {
         }
     });
 }
-
-
 
 
 function handleNewUser() {

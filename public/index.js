@@ -45,14 +45,6 @@ function newPostRender() {
     })
 }
 
-/*
-function handleGamers() {
-    $('main').find('.gameBtn').on('click', function (e) {
-        e.preventDefault();
-        $('.mainContainer').html(getUsers);
-    })
-}
-*/
 
 function createNewPost() {
     $('.newPostForm').on('submit', function (e) {
@@ -183,30 +175,6 @@ function handleEditPost() {
     })
 }
 
-function handleComment() { //fix this
-    $('main').on('click', '.commentBtn', function (e) {
-        e.preventDefault();
-        let user = $('.proNamePic').data('id');
-        addComment({
-            id: $(this).data('id'),
-            user: user,
-            comment: $('.commentIn').val()
-        })
-    })
-}
-
-function addComment(data) { //fix this
-    $.ajax({
-        method: 'PUT',
-        url: `/posts/${data.id}`,
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function () {
-            $('.comments').prepend(`<p class="cmtUser" data-id="${data.id}>${data.user}</p><p class="cmtContent>${data.comment}</p>`);
-        }
-        });
-}
 
 
 $(function () {
@@ -221,25 +189,6 @@ $(function () {
     renderDeleteUser();
     handleDeleteUser();
     showUserCard();
-    //handleComment();
-    /*
-    $('.mainContainer').on('click', '.gameBtn', function (e) {
-        e.preventDefault();
-        $('.containerHead').css('display', 'flex');
-        $('.mainContainer').css('flex-flow', 'row wrap');
-        getAndDisplayUsers();
-    })
-    $('.mainContainer').on('click', '.profileBtn', function (e) {
-        e.preventDefault();
-        handleProfile();
-    })
-    $('.mainContainer').on('click', '.allBtn', function (e) {
-        e.preventDefault();
-        $('#profileContainer').hide();
-        $('.containerHead').css('display', 'flex');
-        $('.mainContainer').css('flex-flow', 'column');
-        getAndDisplayPosts();
-    })*/
     $('.containerHead').on('click', '.gBtn', function (e) {
         e.preventDefault();
         $('#profileContainer').hide();

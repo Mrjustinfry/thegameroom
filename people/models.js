@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
- 
- //switch SW-####-####-####
 
 const peopleSchema = mongoose.Schema({
     username: {

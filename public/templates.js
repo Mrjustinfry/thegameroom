@@ -20,7 +20,6 @@ function displayPosts(data) {
             '<p class="content">' + data[i].content + '</p>' +
             '<p class="date">' + data[i].date + '</p></div>' +
             '<div class="commentBox"><p class="comments">' + data[i].comments + '</p >' +
-           // `<input type="text" placeholder="  Leave a comment..." class="commentIn"><button type="submit" class="commentBtn" aria="button" data-id="${data[i].id}">comment</button></div>` +
                 '</div>');
     }
 };
@@ -112,7 +111,7 @@ function signupTemplate() {
 
 
 function userTemplate(data) {
-    return `<div class="container userBox userCard" data-id="${data.id}"><span class="close" id="suClose">&times;</span>` +
+    return `<div class="container userBox userCard" data-id="${data.id}"><span class="close" id="ucClose">&times;</span>` +
         `<div class="namePic"><h3 class="username green">` + data.username + `</h3>` +
         `<img src='profile.jpg' alt="profile picture" /><p class="fullName">${data.firstName} ${data.lastName}</p></div>` +
         `<div class="userInfo"><p>Switch Friend Code: </br><span class="data">` + data.nintendo + `</span></p>` +
