@@ -8,7 +8,7 @@ to your profile page where you can write new blog posts, edit or delete existing
 gamers list. Through the nav bar you can veiw all posts on the post page, view all gamers on the gamers page, exit the app, or return to your profile. 
 (comments and profile pictures are still being developed)
 
-[screenshot!](/landing.png)
+![screenshot](/landing.png raw="true")
 
 
 The Game Room is a node.js app build with HTML, CSS, Javascript/JQuery, and Express. Tested with mocha and chai and supported by MongoDB.
