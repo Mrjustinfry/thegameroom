@@ -13,4 +13,4 @@ gamers list. Through the nav bar you can veiw all posts on the post page, view a
 
 
 
-The Game Room is a node.js app build with HTML, CSS, Javascript/JQuery, and Express. Tested with mocha and chai and supported by MongoDB.
+The Game Room is a node.js app built with HTML, CSS, Javascript/JQuery, and Express. Tested with mocha and chai and supported by MongoDB.
